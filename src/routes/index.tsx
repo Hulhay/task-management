@@ -1,15 +1,20 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import { Home } from '../pages';
+import { CreateTask, DetailTask, Home } from '../pages';
 
-const Navigations = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
-  );
-};
+const Navigations = createBrowserRouter([
+  {
+    index: true,
+    element: <Home />,
+  },
+  {
+    path: '/add',
+    element: <CreateTask />,
+  },
+  {
+    path: '/task/:id',
+    element: <DetailTask />,
+  },
+]);
 
 export default Navigations;
