@@ -1,9 +1,27 @@
-import { lang } from '../../utils';
+import { DetailsList, SelectionMode } from '@fluentui/react';
+import React from 'react';
+
+import { FilterBox, Header } from './components';
+import { dummyResponse } from './dummy';
+import { Columns } from './homeProps';
 
 const Home = () => {
+  const data = dummyResponse;
+  const style: React.CSSProperties = {
+    margin: '0px 25px',
+  };
+
   return (
     <>
-      <h1>{lang('home.title')}</h1>
+      <Header />
+      <div style={style}>
+        <FilterBox />
+        <DetailsList
+          items={data.data}
+          columns={Columns}
+          selectionMode={SelectionMode.none}
+        />
+      </div>
     </>
   );
 };

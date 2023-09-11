@@ -1,7 +1,19 @@
 {
   "id": {
     "home": {
-      "title": "Task Management"
+      "header": "Task Management",
+      "list": {
+        "title": "Title",
+        "state": "State",
+        "priority": "Priority",
+        "due_date": "Due Date",
+        "tags": "Tags"
+      },
+      "filter": {
+        "title_placeholder": "Search by title",
+        "state_placeholder": "State",
+        "priority_placeholder": "Priority"
+      }
     }
   }
 }
