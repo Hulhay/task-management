@@ -20,7 +20,8 @@ export const Columns: IColumn[] = [
     key: 'status',
     name: lang('home.list.state'),
     minWidth: 70,
-    maxWidth: 90,
+    maxWidth: 95,
+    isResizable: true,
     onRender: (item: any) => {
       return <StateLabel state={item.status} />;
     },

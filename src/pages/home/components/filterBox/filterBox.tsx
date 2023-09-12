@@ -7,7 +7,7 @@ import {
 } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react/lib/Icon';
 import { SearchBox } from '@fluentui/react/lib/SearchBox';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 
 import { lang } from '../../../../utils';
 
@@ -70,6 +70,11 @@ const FilterBox = () => {
     setPriority({ key: null });
   };
 
+  const showResetButton = useMemo(
+    () => !!keyword || !!state.key || !!priority.key,
+    [keyword, state.key, priority.key],
+  );
+
   useEffect(() => {
     console.log({
       keyword,
@@ -106,9 +111,11 @@ const FilterBox = () => {
           selectedKey={priority?.key}
         />
       </Stack.Item>
-      <Stack.Item>
-        <IconButton iconProps={clearIcon} onClick={onClear} />
-      </Stack.Item>
+      {showResetButton ? (
+        <Stack.Item>
+          <IconButton iconProps={clearIcon} onClick={onClear} />
+        </Stack.Item>
+      ) : null}
     </Stack>
   );
 };

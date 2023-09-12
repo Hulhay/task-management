@@ -1,9 +1,10 @@
+import { IStackTokens, Stack } from '@fluentui/react';
 import { memo } from 'react';
 import { BsCircleFill } from 'react-icons/bs';
 
 import { titleCase } from '../../../../helper';
 import pallete from '../../../../utils/theme/default';
-import { stateLabelStyle } from './stateLabelStyle';
+import { labelStyle } from './stateLabelStyle';
 
 interface IStateLabel {
   state: string;
@@ -21,11 +22,17 @@ const StateLabel = ({ state }: IStateLabel) => {
     }
   };
 
+  const gapStackTokens: IStackTokens = {
+    childrenGap: 5,
+  };
+
   return (
-    <div style={stateLabelStyle}>
-      <BsCircleFill color={stateColor(state)} />
-      <p>{titleCase(state)}</p>
-    </div>
+    <Stack horizontal tokens={gapStackTokens} verticalAlign="center">
+      <Stack.Item>
+        <BsCircleFill color={stateColor(state)} />
+      </Stack.Item>
+      <Stack.Item style={labelStyle}>{titleCase(state)}</Stack.Item>
+    </Stack>
   );
 };
 
