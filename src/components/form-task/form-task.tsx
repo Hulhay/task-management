@@ -6,6 +6,7 @@ import {
   DialogType,
   Dropdown,
   IComboBox,
+  IDialogContentProps,
   IDropdownOption,
   IStackStyles,
   IStackTokens,
@@ -16,9 +17,17 @@ import {
   TimePicker,
 } from '@fluentui/react';
 import { useBoolean, useConst } from '@fluentui/react-hooks';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { formatDateString } from '../../helper';
+import {
+  buildDueDate,
+  formatDateString,
+  getPriorityText,
+  getStateText,
+  stringToDateTime,
+} from '../../helper';
+import { ITask } from '../../interface';
 import { lang } from '../../utils';
 
 const stateOptions: IDropdownOption[] = [
@@ -77,20 +86,12 @@ const buttonStackStyle: IStackStyles = {
   },
 };
 
-const dialogContentProps = {
-  type: DialogType.normal,
-  title: lang('dialog.cancel_create_task'),
-  subText: lang('dialog.cancel_create_task_description'),
-};
+interface IFormTask {
+  task?: ITask;
+}
 
-const buildDueDate = (date: Date, time: Date) => {
-  return `${formatDateString(date.toISOString(), 'YYYY-MM-DD')} ${formatDateString(
-    time.toISOString(),
-    'HH:mm:ss',
-  )}`;
-};
-
-const FormTask = () => {
+const FormTask = ({ task }: IFormTask) => {
+  const navigate = useNavigate();
   const today = useConst(new Date(Date.now()));
   const [description, setDescription] = useState<string>('');
   const [title, setTile] = useState<string>('');
@@ -100,6 +101,14 @@ const FormTask = () => {
   const [priority, setPriority] = useState<IDropdownOption>(priorityOptions[0]);
   const [tags, setTags] = useState<string[]>([]);
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
+
+  const dialogContentProps: IDialogContentProps = {
+    type: DialogType.normal,
+    title: task ? lang('dialog.cancel_update_task') : lang('dialog.cancel_create_task'),
+    subText: task
+      ? lang('dialog.cancel_update_task_description')
+      : lang('dialog.cancel_create_task_description'),
+  };
 
   const onTitleChange = (
     _: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -158,7 +167,7 @@ const FormTask = () => {
     }
   };
 
-  const onCancel = () => {
+  const onCancelCreate = () => {
     setTile('');
     setDescription('');
     setDate(today);
@@ -167,6 +176,14 @@ const FormTask = () => {
     setPriority(priorityOptions[0]);
     setTags([]);
     toggleHideDialog();
+  };
+
+  const onCancelEdit = () => {
+    navigate(`/task/${task?.id}`);
+  };
+
+  const onCancel = () => {
+    task ? onCancelEdit() : onCancelCreate();
   };
 
   const onSubmit = (event: React.FormEvent) => {
@@ -180,6 +197,18 @@ const FormTask = () => {
       tags,
     });
   };
+
+  useEffect(() => {
+    if (task) {
+      setTile(task?.title);
+      setDescription(task.description);
+      setDate(stringToDateTime(task?.due_date || ''));
+      setTime(stringToDateTime(task?.due_date || ''));
+      setState({ key: task.status, text: getStateText(task.status) });
+      setPriority({ key: task.priority, text: getPriorityText(task.status) });
+      setTags(task.tags);
+    }
+  }, []);
 
   return (
     <>
@@ -210,7 +239,7 @@ const FormTask = () => {
           >
             <DatePicker
               placeholder={lang('form_task.date_picker_placeholder')}
-              minDate={today}
+              minDate={task ? undefined : today}
               formatDate={onFormatDate}
               onSelectDate={onDateChange}
               value={date}
@@ -226,14 +255,14 @@ const FormTask = () => {
           label={lang('form_task.state')}
           options={stateOptions}
           placeholder={lang('form_task.state_placeholder')}
-          defaultSelectedKey={'todo'}
+          defaultSelectedKey={task?.status || 'todo'}
           onChange={onStateChange}
         />
         <Dropdown
           label={lang('form_task.priority')}
           options={priorityOptions}
           placeholder={lang('form_task.priority_placeholder')}
-          defaultSelectedKey={'low'}
+          defaultSelectedKey={task?.priority || 'low'}
           onChange={onPriorityChange}
         />
         <Dropdown
@@ -248,7 +277,9 @@ const FormTask = () => {
           <DefaultButton onClick={toggleHideDialog}>
             {lang('button.cancel')}
           </DefaultButton>
-          <PrimaryButton type="submit">{lang('button.submit')}</PrimaryButton>
+          <PrimaryButton type="submit">
+            {task ? lang('button.edit') : lang('button.submit')}
+          </PrimaryButton>
         </Stack>
       </form>
 
