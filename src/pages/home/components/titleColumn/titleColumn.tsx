@@ -4,11 +4,11 @@ import { titleCase } from '../../../../helper';
 import { palette } from '../../../../utils';
 
 interface ITitleColumn {
-  id: string;
+  taskID: string;
   title: string;
 }
 
-const TitleColumn = ({ id, title }: ITitleColumn) => {
+const TitleColumn = ({ taskID, title }: ITitleColumn) => {
   const [color, setColor] = useState<string>(palette.text.black);
   const [textDecoration, setTextDecoration] = useState<string>('none');
 
@@ -19,7 +19,7 @@ const TitleColumn = ({ id, title }: ITitleColumn) => {
   return (
     <a
       style={style}
-      href={`/task/${id}`}
+      href={`/task/${taskID}`}
       onMouseEnter={() => {
         setColor(palette.text.selected);
         setTextDecoration('underline');

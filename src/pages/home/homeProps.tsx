@@ -9,11 +9,11 @@ export const Columns: IColumn[] = [
     key: 'title',
     name: lang('home.list.title'),
     minWidth: 210,
-    maxWidth: 550,
+    maxWidth: 450,
     isRowHeader: true,
     isResizable: true,
     onRender: (item: any) => {
-      return <TitleColumn id={item.id} title={item.title} />;
+      return <TitleColumn taskID={item.id} title={item.title} />;
     },
   },
   {

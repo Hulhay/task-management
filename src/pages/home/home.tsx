@@ -1,7 +1,9 @@
 import { DetailsList, SelectionMode } from '@fluentui/react';
 import React from 'react';
 
-import { FilterBox, Header } from './components';
+import { Header } from '../../components';
+import { lang } from '../../utils';
+import { FilterBox } from './components';
 import { dummyResponse } from './dummy';
 import { Columns } from './homeProps';
 
@@ -14,7 +16,7 @@ const Home = () => {
 
   return (
     <div style={style}>
-      <Header />
+      <Header title={lang('home.header')} />
       <FilterBox />
       <DetailsList
         items={data.data}

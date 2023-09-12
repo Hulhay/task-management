@@ -1,12 +1,15 @@
 import { memo } from 'react';
 
-import { lang } from '../../../../utils';
 import { headerStyle } from './headerStyle';
 
-const Header = () => {
+interface IHeader {
+  title: string;
+}
+
+const Header = ({ title }: IHeader) => {
   return (
     <div style={headerStyle}>
-      <h1>{lang('home.header')}</h1>
+      <h1>{title}</h1>
     </div>
   );
 };

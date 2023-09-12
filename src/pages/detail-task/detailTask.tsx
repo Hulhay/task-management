@@ -1,8 +1,15 @@
+import { useParams } from 'react-router-dom';
+
+import { Header } from '../../components';
+import { lang } from '../../utils';
+
 const DetailTask = () => {
+  const { taskID } = useParams<{ taskID: string }>();
+
   return (
-    <div>
-      <h1>Detail Task</h1>
-    </div>
+    <>
+      <Header title={lang('detail_task.header', { task_name: taskID })} />
+    </>
   );
 };
 

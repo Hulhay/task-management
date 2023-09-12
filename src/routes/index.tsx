@@ -17,7 +17,7 @@ const Navigations = createBrowserRouter([
         element: <CreateTask />,
       },
       {
-        path: 'task/:id',
+        path: 'task/:taskID',
         element: <DetailTask />,
       },
     ],

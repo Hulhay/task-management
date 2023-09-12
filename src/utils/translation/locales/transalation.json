@@ -1,7 +1,7 @@
 {
   "id": {
     "home": {
-      "header": "Task Management",
+      "header": "My Task",
       "list": {
         "title": "Title",
         "state": "State",
@@ -14,6 +14,12 @@
         "state_placeholder": "State",
         "priority_placeholder": "Priority"
       }
+    },
+    "add_task": {
+      "header": "Create New Task"
+    },
+    "detail_task": {
+      "header": "{{task_name}}"
     }
   }
 }

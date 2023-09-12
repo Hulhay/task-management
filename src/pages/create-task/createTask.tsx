@@ -1,8 +1,11 @@
+import { Header } from '../../components';
+import { lang } from '../../utils';
+
 const CreateTask = () => {
   return (
-    <div>
-      <h1>Create Task</h1>
-    </div>
+    <>
+      <Header title={lang('add_task.header')} />
+    </>
   );
 };
 
