@@ -1,11 +1,11 @@
 import { I18n } from 'i18n-js';
 
-import id from './locales/transalation.json';
+import en from './locales/transalation.json';
 
-const i18n = new I18n({ ...id });
+const i18n = new I18n({ ...en });
 
-i18n.defaultLocale = 'id';
-i18n.locale = 'id';
+i18n.defaultLocale = 'en';
+i18n.locale = 'en';
 
 export default (name: string, params = {}) => {
   return i18n.t(name, params);
