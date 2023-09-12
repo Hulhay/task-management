@@ -29,6 +29,10 @@
     "edit_task": {
       "header": "Edit Task"
     },
+    "not_found": {
+      "header": "404 - Not Found",
+      "description": "The page you are looking for is not available"
+    },
     "form_task": {
       "title": "Title",
       "title_placeholder": "Please fill the task title",
@@ -60,7 +64,8 @@
       "edit": "Edit",
       "delete": "Delete",
       "no": "No",
-      "yes": "Yes"
+      "yes": "Yes",
+      "back_to_home": "Back to Home"
     }
   }
 }
