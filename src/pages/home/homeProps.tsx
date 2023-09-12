@@ -1,8 +1,9 @@
 import { IColumn } from '@fluentui/react';
 
+import { TagLabel } from '../../components';
 import { formatDateString, titleCase } from '../../helper';
 import { lang } from '../../utils';
-import { StateLabel, TagLabel, TitleColumn } from './components';
+import { StateLabel, TitleColumn } from './components';
 
 export const Columns: IColumn[] = [
   {
@@ -51,8 +52,8 @@ export const Columns: IColumn[] = [
     onRender: (item: any) => {
       return (
         <div>
-          {item.tags.map((tag: string) => (
-            <TagLabel tag={tag} key={tag} />
+          {item.tags.map((tag: string, index: number) => (
+            <TagLabel tag={tag} key={index} />
           ))}
         </div>
       );

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { CreateTask, DetailTask, Home } from '../pages';
+import { CreateTask, DetailTask, EditTask, Home } from '../pages';
 import RootLayout from './layout';
 
 const Navigations = createBrowserRouter([
@@ -19,6 +19,10 @@ const Navigations = createBrowserRouter([
       {
         path: 'task/:taskID',
         element: <DetailTask />,
+      },
+      {
+        path: 'task/:taskID/edit',
+        element: <EditTask />,
       },
     ],
   },

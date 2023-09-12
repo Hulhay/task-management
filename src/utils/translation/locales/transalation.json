@@ -19,7 +19,15 @@
       "header": "Create New Task"
     },
     "detail_task": {
-      "header": "{{task_name}}"
+      "header": "{{task_name}}",
+      "description": "Description",
+      "due_date": "Due Date",
+      "state": "State",
+      "priority": "Priority",
+      "tags": "Tags"
+    },
+    "edit_task": {
+      "header": "Edit Task"
     },
     "form_task": {
       "title": "Title",
@@ -40,11 +48,15 @@
     },
     "dialog": {
       "cancel_create_task": "Cancel a task",
-      "cancel_create_task_description": "Are you sure you want to cancel the task?"
+      "cancel_create_task_description": "Are you sure you want to cancel the task?",
+      "delete_task": "Delete a task",
+      "delete_task_description": "Are you sure want to delete this task?"
     },
     "button": {
       "submit": "Submit",
       "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
       "no": "No",
       "yes": "Yes"
     }

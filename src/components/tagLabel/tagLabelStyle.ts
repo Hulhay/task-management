@@ -1,4 +1,4 @@
-import { palette } from '../../../../utils';
+import { palette } from '../../utils';
 
 export const tagLabelStyle: React.CSSProperties = {
   display: 'inline-block',

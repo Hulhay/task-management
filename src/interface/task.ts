@@ -14,3 +14,8 @@ export interface IGetTaskResponse {
   meta: IMeta;
   data: ITask[];
 }
+
+export interface IGetTaskDetailResponse {
+  meta: IMeta;
+  data: ITask;
+}
