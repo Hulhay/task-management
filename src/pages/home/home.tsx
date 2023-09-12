@@ -8,21 +8,20 @@ import { Columns } from './homeProps';
 const Home = () => {
   const data = dummyResponse;
   const style: React.CSSProperties = {
-    margin: '0px 25px',
+    margin: '0px 15px',
+    width: '100%',
   };
 
   return (
-    <>
+    <div style={style}>
       <Header />
-      <div style={style}>
-        <FilterBox />
-        <DetailsList
-          items={data.data}
-          columns={Columns}
-          selectionMode={SelectionMode.none}
-        />
-      </div>
-    </>
+      <FilterBox />
+      <DetailsList
+        items={data.data}
+        columns={Columns}
+        selectionMode={SelectionMode.none}
+      />
+    </div>
   );
 };
 
