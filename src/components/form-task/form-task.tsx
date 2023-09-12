@@ -16,13 +16,14 @@ import {
   TextField,
   TimePicker,
 } from '@fluentui/react';
-import { useBoolean, useConst } from '@fluentui/react-hooks';
+import { useBoolean } from '@fluentui/react-hooks';
 import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
   buildDueDate,
   formatDateString,
+  getNow,
   getPriorityText,
   getStateText,
   stringToDateTime,
@@ -92,7 +93,7 @@ interface IFormTask {
 
 const FormTask = ({ task }: IFormTask) => {
   const navigate = useNavigate();
-  const today = useConst(new Date(Date.now()));
+  const today = getNow();
   const [description, setDescription] = useState<string>('');
   const [title, setTile] = useState<string>('');
   const [date, setDate] = useState<Date>(today);

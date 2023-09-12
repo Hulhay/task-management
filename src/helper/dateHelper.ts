@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+export const getNow = () => {
+  return new Date(Date.now());
+};
+
 export const formatDateString = (date = '', defaultFormat = 'YYYY-MM-DD') => {
   return moment(date).format(defaultFormat);
 };
