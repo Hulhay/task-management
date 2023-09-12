@@ -7,7 +7,7 @@ import {
 } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react/lib/Icon';
 import { SearchBox } from '@fluentui/react/lib/SearchBox';
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import { lang } from '../../../../utils';
 
@@ -47,51 +47,32 @@ const clearSearchIcon: IButtonProps = {
   style: { display: 'none' },
 };
 
-const FilterBox = () => {
-  const [keyword, setKeyword] = useState<string>('');
-  const [state, setState] = useState<IDropdownOption>({ key: '', text: '' });
-  const [priority, setPriority] = useState<IDropdownOption>({ key: '', text: '' });
-
-  const onKeywordChange = (event?: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(event?.target.value || '');
-  };
-
-  const onStateChange = (
+interface IFilterBox {
+  keyword?: string;
+  state?: IDropdownOption;
+  priority?: IDropdownOption;
+  onKeywordChange?: (event?: React.ChangeEvent<HTMLInputElement>) => void;
+  onStateChange?: (_: React.FormEvent<HTMLDivElement>, option?: IDropdownOption) => void;
+  onPriorityChange?: (
     _: React.FormEvent<HTMLDivElement>,
     option?: IDropdownOption,
-  ) => {
-    if (option) {
-      setState(option);
-    }
-  };
+  ) => void;
+  onClear?: () => void;
+}
 
-  const onPriorityChange = (
-    _: React.FormEvent<HTMLDivElement>,
-    option?: IDropdownOption,
-  ) => {
-    if (option) {
-      setPriority(option);
-    }
-  };
-
-  const onClear = () => {
-    setKeyword('');
-    setState({ key: '', text: '' });
-    setPriority({ key: '', text: '' });
-  };
-
+const FilterBox = ({
+  keyword,
+  state,
+  priority,
+  onKeywordChange,
+  onStateChange,
+  onPriorityChange,
+  onClear,
+}: IFilterBox) => {
   const showResetButton = useMemo(
-    () => !!keyword || !!state.key || !!priority.key,
-    [keyword, state.key, priority.key],
+    () => !!keyword || !!state?.key || !!priority?.key,
+    [keyword, state?.key, priority?.key],
   );
-
-  useEffect(() => {
-    console.log({
-      keyword,
-      state: state?.key,
-      priority: priority.key,
-    });
-  }, [keyword, state, priority]);
 
   return (
     <Stack horizontal>

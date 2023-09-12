@@ -10,6 +10,12 @@ export interface ITask {
   tags: string[];
 }
 
+export interface IGetTaskRequest {
+  keyword?: string;
+  state?: string;
+  priority?: string;
+}
+
 export interface IGetTaskResponse {
   meta: IMeta;
   data: ITask[];
