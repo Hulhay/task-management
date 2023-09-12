@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { CreateTask, DetailTask, EditTask, Home, NotFound } from '../pages';
+import { CreateTask, DetailTask, EditTask, Home, NetworkError, NotFound } from '../pages';
 import RootLayout from './layout';
 
 const Navigations = createBrowserRouter([
@@ -26,6 +26,10 @@ const Navigations = createBrowserRouter([
         element: <EditTask />,
       },
     ],
+  },
+  {
+    path: 'network-error',
+    element: <NetworkError />,
   },
 ]);
 

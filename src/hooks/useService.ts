@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { BaseURL } from '../config';
 
@@ -14,6 +15,7 @@ export interface IPromise<T> {
 }
 
 export const useService = <T>({ path, options, loadOnStart }: IPromise<T>) => {
+  const navigate = useNavigate();
   const url = `${BaseURL}/${path}`;
   const [response, setResponse] = useState<T>();
   const [error, setError] = useState<string>();
@@ -34,6 +36,9 @@ export const useService = <T>({ path, options, loadOnStart }: IPromise<T>) => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data.meta.message);
+        if (error.message.includes('Network Error')) {
+          navigate('/network-error');
+        }
       }
     } finally {
       setLoading(false);

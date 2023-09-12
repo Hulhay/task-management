@@ -33,6 +33,9 @@
       "header": "404 - Not Found",
       "description": "The page you are looking for is not available"
     },
+    "network_error": {
+      "header": "503 - Service Unavailable"
+    },
     "form_task": {
       "title": "Title",
       "title_placeholder": "Please fill the task title",
