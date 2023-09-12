@@ -2,6 +2,7 @@ import { IColumn } from '@fluentui/react';
 
 import { TagLabel } from '../../components';
 import { formatDateString, titleCase } from '../../helper';
+import { ITask } from '../../interface';
 import { lang } from '../../utils';
 import { StateLabel, TitleColumn } from './components';
 
@@ -13,7 +14,7 @@ export const Columns: IColumn[] = [
     maxWidth: 450,
     isRowHeader: true,
     isResizable: true,
-    onRender: (item: any) => {
+    onRender: (item: ITask) => {
       return <TitleColumn taskID={item.id} title={item.title} />;
     },
   },
@@ -23,7 +24,7 @@ export const Columns: IColumn[] = [
     minWidth: 70,
     maxWidth: 95,
     isResizable: true,
-    onRender: (item: any) => {
+    onRender: (item: ITask) => {
       return <StateLabel state={item.status} />;
     },
   },
@@ -33,7 +34,7 @@ export const Columns: IColumn[] = [
     minWidth: 70,
     maxWidth: 90,
     isResizable: true,
-    onRender: (item: any) => titleCase(item.priority),
+    onRender: (item: ITask) => titleCase(item.priority),
   },
   {
     key: 'dueDate',
@@ -41,7 +42,7 @@ export const Columns: IColumn[] = [
     minWidth: 80,
     maxWidth: 120,
     isResizable: true,
-    onRender: (item: any) => formatDateString(item.due_date, 'MMMM D, YYYY'),
+    onRender: (item: ITask) => formatDateString(item.due_date, 'MMMM D, YYYY'),
   },
   {
     key: 'tags',
@@ -49,7 +50,7 @@ export const Columns: IColumn[] = [
     minWidth: 70,
     maxWidth: 90,
     isResizable: true,
-    onRender: (item: any) => {
+    onRender: (item: ITask) => {
       return (
         <div>
           {item.tags.map((tag: string, index: number) => (

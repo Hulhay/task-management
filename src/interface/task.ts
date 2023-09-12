@@ -5,8 +5,8 @@ export interface ITask {
   title: string;
   description: string;
   due_date: string;
-  priority: string;
-  status: string;
+  priority: 'low' | 'medium' | 'high';
+  status: 'todo' | 'in-progress' | 'completed';
   tags: string[];
 }
 

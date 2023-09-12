@@ -49,25 +49,35 @@ const clearSearchIcon: IButtonProps = {
 
 const FilterBox = () => {
   const [keyword, setKeyword] = useState<string>('');
-  const [state, setState] = useState({ key: null });
-  const [priority, setPriority] = useState({ key: null });
+  const [state, setState] = useState<IDropdownOption>({ key: '', text: '' });
+  const [priority, setPriority] = useState<IDropdownOption>({ key: '', text: '' });
 
   const onKeywordChange = (event?: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event?.target.value || '');
   };
 
-  const onStateChange = (_: any, option?: any) => {
-    setState(option);
+  const onStateChange = (
+    _: React.FormEvent<HTMLDivElement>,
+    option?: IDropdownOption,
+  ) => {
+    if (option) {
+      setState(option);
+    }
   };
 
-  const onPriorityChange = (_: any, option?: any) => {
-    setPriority(option);
+  const onPriorityChange = (
+    _: React.FormEvent<HTMLDivElement>,
+    option?: IDropdownOption,
+  ) => {
+    if (option) {
+      setPriority(option);
+    }
   };
 
   const onClear = () => {
     setKeyword('');
-    setState({ key: null });
-    setPriority({ key: null });
+    setState({ key: '', text: '' });
+    setPriority({ key: '', text: '' });
   };
 
   const showResetButton = useMemo(
