@@ -20,6 +20,33 @@
     },
     "detail_task": {
       "header": "{{task_name}}"
+    },
+    "form_task": {
+      "title": "Title",
+      "title_placeholder": "Please fill the task title",
+      "description": "Description",
+      "description_placeholder": "Please fill the description",
+      "due_date": "Due Date",
+      "date_picker_placeholder": "Select a date",
+      "time_picker_placeholder": "Select a time",
+      "priority": "Priority",
+      "priority_placeholder": "Choose the task priority",
+      "state": "State",
+      "todo": "Todo",
+      "inprogress": "In-progress",
+      "completed": "Completed",
+      "tags": "Tags",
+      "tags_placeholder": "Select tag(s)"
+    },
+    "dialog": {
+      "cancel_create_task": "Cancel a task",
+      "cancel_create_task_description": "Are you sure you want to cancel the task?"
+    },
+    "button": {
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "no": "No",
+      "yes": "Yes"
     }
   }
 }
