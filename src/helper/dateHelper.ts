@@ -16,6 +16,7 @@ export const buildDueDate = (date: Date, time: Date) => {
 };
 
 export const stringToDateTime = (dateTimeString: string) => {
+  if (!dateTimeString) return new Date();
   const dateParts = dateTimeString.split(' ');
   const [datePart, timePart] = dateParts;
   const [year, month, day] = datePart.split('-');

@@ -48,6 +48,7 @@
       "priority": "Priority",
       "priority_placeholder": "Choose the task priority",
       "state": "State",
+      "state_placeholder": "Choose the task state",
       "todo": "Todo",
       "inprogress": "In-progress",
       "completed": "Completed",

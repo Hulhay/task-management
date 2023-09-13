@@ -6,6 +6,7 @@ import {
   IGetTaskListResponse,
   IGetTaskRequest,
   IGetTaskResponse,
+  IUpdateTaskRequest,
 } from '../interface';
 
 export default {
@@ -52,6 +53,25 @@ export default {
       path: `api/v1/tasks`,
       options: {
         method: 'POST' as Method,
+        data: {
+          title: data.title,
+          description: data.description,
+          due_date: data.due_date,
+          status: data.status,
+          priority: data.priority,
+          tags: data.tags,
+        },
+      },
+      loadOnStart: false,
+    });
+
+    return { response, loading, request };
+  },
+  updateTaskByID: (data: IUpdateTaskRequest) => {
+    const { response, loading, request } = useService<IGetTaskResponse>({
+      path: `api/v1/tasks/${data.taskID}`,
+      options: {
+        method: 'PATCH' as Method,
         data: {
           title: data.title,
           description: data.description,

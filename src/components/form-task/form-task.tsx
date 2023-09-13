@@ -110,18 +110,6 @@ const FormTask = ({
     toggleHideDialog();
   };
 
-  // useEffect(() => {
-  //   if (task) {
-  //     setTile(task?.title);
-  //     setDescription(task.description);
-  //     setDate(stringToDateTime(task?.due_date || ''));
-  //     setTime(stringToDateTime(task?.due_date || ''));
-  //     setState({ key: task.status, text: getStateText(task.status) });
-  //     setPriority({ key: task.priority, text: getPriorityText(task.status) });
-  //     setTags(task.tags);
-  //   }
-  // }, []);
-
   return (
     <>
       <form onSubmit={onSubmit}>
