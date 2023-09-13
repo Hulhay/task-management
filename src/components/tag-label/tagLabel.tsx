@@ -7,7 +7,7 @@ interface ITagLabel {
   tag: string;
 }
 
-const TagLabel = ({ tag }: ITagLabel) => {
+const TagLabel: React.FC<ITagLabel> = ({ tag }) => {
   return <Label style={tagLabelStyle}>{tag}</Label>;
 };
 

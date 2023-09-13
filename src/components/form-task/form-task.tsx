@@ -19,7 +19,7 @@ import {
   TimePicker,
 } from '@fluentui/react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { memo } from 'react';
+import React, { memo } from 'react';
 
 import {
   formatDateString,
@@ -70,7 +70,7 @@ interface IFormTask {
   submitLabel: string;
 }
 
-const FormTask = ({
+const FormTask: React.FC<IFormTask> = ({
   task,
   title,
   description,
@@ -90,7 +90,7 @@ const FormTask = ({
   onSubmit,
   loading,
   submitLabel,
-}: IFormTask) => {
+}) => {
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
 
   const dialogContentProps: IDialogContentProps = {
@@ -111,7 +111,7 @@ const FormTask = ({
   };
 
   return (
-    <>
+    <React.Fragment>
       <form onSubmit={onSubmit}>
         <TextField
           label={lang('form_task.title')}
@@ -193,7 +193,7 @@ const FormTask = ({
           <DefaultButton onClick={onCancelClick}>{lang('button.yes')}</DefaultButton>
         </DialogFooter>
       </Dialog>
-    </>
+    </React.Fragment>
   );
 };
 

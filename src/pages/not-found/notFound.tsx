@@ -5,7 +5,7 @@ import { Header } from '../../components';
 import { lang } from '../../utils';
 import { buttonStyle, stackStyle } from './notFoundStyle';
 
-const NotFound = () => {
+const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
   const onClick = () => {

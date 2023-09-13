@@ -12,7 +12,7 @@ type IRenderedComponent = {
   [key: string]: React.ReactElement;
 };
 
-const Home = () => {
+const Home: React.FC = () => {
   const [keyword, setKeyword] = useState<string>('');
   const [state, setState] = useState<IDropdownOption>({ key: '', text: '' });
   const [priority, setPriority] = useState<IDropdownOption>({ key: '', text: '' });

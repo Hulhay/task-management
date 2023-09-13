@@ -8,7 +8,7 @@ interface ITitleColumn {
   title: string;
 }
 
-const TitleColumn = ({ taskID, title }: ITitleColumn) => {
+const TitleColumn: React.FC<ITitleColumn> = ({ taskID, title }) => {
   const [color, setColor] = useState<string>(palette.text.black);
   const [textDecoration, setTextDecoration] = useState<string>('none');
 

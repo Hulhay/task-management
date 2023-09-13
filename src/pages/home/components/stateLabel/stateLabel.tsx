@@ -10,7 +10,7 @@ interface IStateLabel {
   state: string;
 }
 
-const StateLabel = ({ state }: IStateLabel) => {
+const StateLabel: React.FC<IStateLabel> = ({ state }) => {
   const stateColor = (state: string) => {
     switch (state) {
       case 'todo':

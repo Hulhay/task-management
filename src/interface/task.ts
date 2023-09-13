@@ -18,14 +18,9 @@ export interface IGetTaskRequest {
   priority?: string;
 }
 
-export interface IGetTaskListResponse {
+export interface IGetTaskResponse<T> {
   meta: IMeta;
-  data: ITask[];
-}
-
-export interface IGetTaskResponse {
-  meta: IMeta;
-  data: ITask;
+  data: T;
 }
 
 export interface ICreateTaskRequest {

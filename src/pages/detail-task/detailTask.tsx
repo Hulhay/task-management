@@ -13,7 +13,7 @@ import {
   Text,
 } from '@fluentui/react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Header, Loading, TagLabel } from '../../components';
@@ -46,7 +46,7 @@ const dialogContentProps = {
   subText: lang('dialog.delete_task_description'),
 };
 
-const DetailTask = () => {
+const DetailTask: React.FC = () => {
   const { taskID } = useParams<{ taskID: string }>();
   const navigate = useNavigate();
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
@@ -85,7 +85,7 @@ const DetailTask = () => {
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <React.Fragment>
           <Header
             title={lang('detail_task.header', {
               task_name: titleCase(response?.data.title || ''),
@@ -144,7 +144,7 @@ const DetailTask = () => {
             </DefaultButton>
             <PrimaryButton onClick={onEditClick}>{lang('button.edit')}</PrimaryButton>
           </Stack>
-        </>
+        </React.Fragment>
       )}
 
       <Dialog

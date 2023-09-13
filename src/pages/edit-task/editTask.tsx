@@ -15,7 +15,7 @@ import {
 import { taskService } from '../../service';
 import { lang } from '../../utils';
 
-const EditTask = () => {
+const EditTask: React.FC = () => {
   const navigate = useNavigate();
   const { taskID } = useParams<{ taskID: string }>();
   const style: React.CSSProperties = {

@@ -60,7 +60,7 @@ interface IFilterBox {
   onClear?: () => void;
 }
 
-const FilterBox = ({
+const FilterBox: React.FC<IFilterBox> = ({
   keyword,
   state,
   priority,
@@ -68,7 +68,7 @@ const FilterBox = ({
   onStateChange,
   onPriorityChange,
   onClear,
-}: IFilterBox) => {
+}) => {
   const showResetButton = useMemo(
     () => !!keyword || !!state?.key || !!priority?.key,
     [keyword, state?.key, priority?.key],
