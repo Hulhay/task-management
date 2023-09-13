@@ -16,12 +16,12 @@ export interface IGetTaskRequest {
   priority?: string;
 }
 
-export interface IGetTaskResponse {
+export interface IGetTaskListResponse {
   meta: IMeta;
   data: ITask[];
 }
 
-export interface IGetTaskDetailResponse {
+export interface IGetTaskResponse {
   meta: IMeta;
   data: ITask;
 }
