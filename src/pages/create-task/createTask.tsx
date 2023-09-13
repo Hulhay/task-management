@@ -7,7 +7,7 @@ import { buildDueDate, getNow, priorityOptions, stateOptions } from '../../helpe
 import { taskService } from '../../service';
 import { lang } from '../../utils';
 
-const CreateTask = () => {
+const CreateTask: React.FC = () => {
   const style: React.CSSProperties = {
     margin: '0px 15px',
     width: '100%',

@@ -7,7 +7,7 @@ interface IHeader {
   title: string;
 }
 
-const Header = ({ title }: IHeader) => {
+const Header: React.FC<IHeader> = ({ title }) => {
   return (
     <div style={headerStyle}>
       <h1 style={{ fontSize: FontSizes.size28, lineHeight: '1.2em' }}>{title}</h1>

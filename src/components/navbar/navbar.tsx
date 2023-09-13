@@ -22,7 +22,7 @@ const navLink: INavLinkGroup[] = [
   },
 ];
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const location = useLocation();
 
   const selectedItem =
