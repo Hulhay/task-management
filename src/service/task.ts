@@ -20,11 +20,22 @@ export default {
 
     return { response, loading, request };
   },
-  getTasksByID: (taskID: string) => {
+  getTaskByID: (taskID: string) => {
     const { response, loading, request } = useService<IGetTaskResponse>({
       path: `api/v1/tasks/${taskID}`,
       options: {
         method: 'GET' as Method,
+      },
+      loadOnStart: false,
+    });
+
+    return { response, loading, request };
+  },
+  deleteTaskByID: (taskID: string) => {
+    const { response, loading, request } = useService<IGetTaskResponse>({
+      path: `api/v1/tasks/${taskID}`,
+      options: {
+        method: 'DELETE' as Method,
       },
       loadOnStart: false,
     });

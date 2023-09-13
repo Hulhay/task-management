@@ -7,11 +7,13 @@ import {
   IStackTokens,
   Label,
   PrimaryButton,
+  Spinner,
+  SpinnerSize,
   Stack,
   Text,
 } from '@fluentui/react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Header, Loading, TagLabel } from '../../components';
@@ -52,14 +54,24 @@ const DetailTask = () => {
     margin: '0px 15px',
     width: '100%',
   };
-  const { response, loading, request } = taskService.getTasksByID(taskID as string);
+  const { response, loading, request } = taskService.getTaskByID(taskID as string);
+  const { loading: loadingDelete, request: requestDelete } = taskService.deleteTaskByID(
+    taskID as string,
+  );
+
+  const modalProps = useMemo(
+    () => ({
+      isBlocking: loadingDelete,
+    }),
+    [loadingDelete],
+  );
 
   const onEditClick = () => {
     navigate(`/task/${taskID}/edit`);
   };
 
   const onDeleteClick = () => {
-    console.log(`delete task ${taskID}`);
+    requestDelete();
     navigate('/');
   };
 
@@ -126,12 +138,15 @@ const DetailTask = () => {
         hidden={hideDialog}
         onDismiss={toggleHideDialog}
         dialogContentProps={dialogContentProps}
+        modalProps={modalProps}
       >
         <DialogFooter>
-          <PrimaryButton onClick={toggleHideDialog}>
+          <PrimaryButton onClick={toggleHideDialog} disabled={loadingDelete}>
             {lang('button.cancel')}
           </PrimaryButton>
-          <DefaultButton onClick={onDeleteClick}>{lang('button.delete')}</DefaultButton>
+          <DefaultButton onClick={onDeleteClick} disabled={loadingDelete}>
+            {loadingDelete ? <Spinner size={SpinnerSize.small} /> : lang('button.delete')}
+          </DefaultButton>
         </DialogFooter>
       </Dialog>
     </div>
