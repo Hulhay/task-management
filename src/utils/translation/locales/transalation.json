@@ -7,7 +7,8 @@
         "state": "State",
         "priority": "Priority",
         "due_date": "Due Date",
-        "tags": "Tags"
+        "tags": "Tags",
+        "no_data": "No Data"
       },
       "filter": {
         "title_placeholder": "Search by title",

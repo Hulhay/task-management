@@ -4,19 +4,36 @@ import React, { useEffect, useState } from 'react';
 import { Header, Loading } from '../../components';
 import { taskService } from '../../service';
 import { lang } from '../../utils';
-import { FilterBox } from './components';
+import { FilterBox, NoData } from './components';
 import { Columns } from './homeProps';
 import { style } from './homeStyle';
+
+type IRenderedComponent = {
+  [key: string]: React.ReactElement;
+};
 
 const Home = () => {
   const [keyword, setKeyword] = useState<string>('');
   const [state, setState] = useState<IDropdownOption>({ key: '', text: '' });
   const [priority, setPriority] = useState<IDropdownOption>({ key: '', text: '' });
+  const [toRender, setToRender] = useState<string>('loading');
   const { response, loading, request } = taskService.getTasks({
     keyword,
     state: state.key as string,
     priority: priority.key as string,
   });
+
+  const renderedComponent: IRenderedComponent = {
+    loading: <Loading />,
+    notData: <NoData />,
+    data: (
+      <DetailsList
+        items={response?.data || []}
+        columns={Columns}
+        selectionMode={SelectionMode.none}
+      />
+    ),
+  };
 
   const onKeywordChange = (event?: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event?.target.value || '');
@@ -47,8 +64,16 @@ const Home = () => {
   };
 
   useEffect(() => {
-    request();
-  }, []);
+    if (loading) {
+      setToRender('loading');
+      return;
+    }
+    if (response?.data.length === 0) {
+      setToRender('notData');
+      return;
+    }
+    setToRender('data');
+  }, [response, loading]);
 
   useEffect(() => {
     if (keyword && keyword.length < 3) return;
@@ -67,15 +92,7 @@ const Home = () => {
         onPriorityChange={onPriorityChange}
         onClear={onClear}
       />
-      {loading ? (
-        <Loading />
-      ) : (
-        <DetailsList
-          items={response?.data || []}
-          columns={Columns}
-          selectionMode={SelectionMode.none}
-        />
-      )}
+      {renderedComponent[toRender]}
     </div>
   );
 };
