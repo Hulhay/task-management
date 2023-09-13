@@ -31,6 +31,10 @@ const Navigations = createBrowserRouter([
     path: 'network-error',
     element: <NetworkError />,
   },
+  {
+    path: 'not-found',
+    element: <NotFound />,
+  },
 ]);
 
 export default Navigations;

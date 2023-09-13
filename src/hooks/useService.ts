@@ -39,6 +39,9 @@ export const useService = <T>({ path, options, loadOnStart }: IPromise<T>) => {
         if (error.message.includes('Network Error')) {
           navigate('/network-error');
         }
+        if (error.response?.data.meta.code === 404) {
+          navigate('/not-found');
+        }
       }
     } finally {
       setLoading(false);
