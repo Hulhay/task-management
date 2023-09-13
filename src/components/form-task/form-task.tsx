@@ -13,6 +13,7 @@ import {
   Label,
   PrimaryButton,
   Spinner,
+  SpinnerSize,
   Stack,
   TextField,
   TimePicker,
@@ -66,6 +67,7 @@ interface IFormTask {
   onCancel: () => void;
   onSubmit: (event: React.FormEvent) => void;
   loading: boolean;
+  submitLabel: string;
 }
 
 const FormTask = ({
@@ -87,6 +89,7 @@ const FormTask = ({
   onCancel,
   onSubmit,
   loading,
+  submitLabel,
 }: IFormTask) => {
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
 
@@ -100,6 +103,11 @@ const FormTask = ({
 
   const onFormatDate = (date?: Date) => {
     return formatDateString(date?.toISOString(), 'YYYY-MM-DD');
+  };
+
+  const onCancelClick = () => {
+    onCancel();
+    toggleHideDialog();
   };
 
   // useEffect(() => {
@@ -182,7 +190,7 @@ const FormTask = ({
             {lang('button.cancel')}
           </DefaultButton>
           <PrimaryButton type="submit">
-            {task ? lang('button.edit') : lang('button.submit')}
+            {loading ? <Spinner size={SpinnerSize.small} /> : submitLabel}
           </PrimaryButton>
         </Stack>
       </form>
@@ -194,14 +202,7 @@ const FormTask = ({
       >
         <DialogFooter>
           <PrimaryButton onClick={toggleHideDialog}>{lang('button.no')}</PrimaryButton>
-          <DefaultButton
-            onClick={() => {
-              onCancel();
-              toggleHideDialog();
-            }}
-          >
-            {lang('button.yes')}
-          </DefaultButton>
+          <DefaultButton onClick={onCancelClick}>{lang('button.yes')}</DefaultButton>
         </DialogFooter>
       </Dialog>
     </>

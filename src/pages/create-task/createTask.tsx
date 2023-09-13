@@ -124,6 +124,7 @@ const CreateTask = () => {
         onCancel={onCancel}
         onSubmit={onSubmit}
         loading={loading}
+        submitLabel={lang('button.submit')}
       />
     </div>
   );
