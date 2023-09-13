@@ -1,7 +1,12 @@
 import { Method } from 'axios';
 
 import { useService } from '../hooks';
-import { IGetTaskListResponse, IGetTaskRequest, IGetTaskResponse } from '../interface';
+import {
+  ICreateTaskRequest,
+  IGetTaskListResponse,
+  IGetTaskRequest,
+  IGetTaskResponse,
+} from '../interface';
 
 export default {
   getTasks: ({ keyword, state, priority }: IGetTaskRequest) => {
@@ -36,6 +41,25 @@ export default {
       path: `api/v1/tasks/${taskID}`,
       options: {
         method: 'DELETE' as Method,
+      },
+      loadOnStart: false,
+    });
+
+    return { response, loading, request };
+  },
+  createTask: (data: ICreateTaskRequest) => {
+    const { response, loading, request } = useService<IGetTaskResponse>({
+      path: `api/v1/tasks`,
+      options: {
+        method: 'POST' as Method,
+        data: {
+          title: data.title,
+          description: data.description,
+          due_date: data.due_date,
+          status: data.status,
+          priority: data.priority,
+          tags: data.tags,
+        },
       },
       loadOnStart: false,
     });

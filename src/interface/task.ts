@@ -25,3 +25,12 @@ export interface IGetTaskResponse {
   meta: IMeta;
   data: ITask;
 }
+
+export interface ICreateTaskRequest {
+  title: string;
+  description: string;
+  due_date: string;
+  priority: string;
+  status: string;
+  tags: string[];
+}
