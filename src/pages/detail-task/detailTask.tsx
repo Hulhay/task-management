@@ -104,6 +104,18 @@ const DetailTask = () => {
                 </Text>
               </Stack.Item>
               <Stack.Item>
+                <Label>{lang('detail_task.created_at')}</Label>
+                <Text>
+                  {formatDateString(response?.data.created_at, 'MMMM D, YYYY • HH:mm')}
+                </Text>
+              </Stack.Item>
+              <Stack.Item>
+                <Label>{lang('detail_task.updated_at')}</Label>
+                <Text>
+                  {formatDateString(response?.data.updated_at, 'MMMM D, YYYY • HH:mm')}
+                </Text>
+              </Stack.Item>
+              <Stack.Item>
                 <Label>{lang('detail_task.tags')}</Label>
                 <div>
                   {response?.data.tags.map((tag: string, index: number) => {

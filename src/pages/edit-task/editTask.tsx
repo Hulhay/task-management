@@ -112,7 +112,6 @@ const EditTask = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log({ response });
       setTile(response?.data.title || '');
       setDescription(response?.data.description || '');
       setDate(stringToDateTime(response?.data.due_date || ''));

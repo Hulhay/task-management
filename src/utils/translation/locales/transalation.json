@@ -25,7 +25,9 @@
       "due_date": "Due Date",
       "state": "State",
       "priority": "Priority",
-      "tags": "Tags"
+      "tags": "Tags",
+      "created_at": "Created At",
+      "updated_at": "Last Updated At"
     },
     "edit_task": {
       "header": "Edit Task"

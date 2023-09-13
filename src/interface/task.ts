@@ -8,6 +8,8 @@ export interface ITask {
   priority: 'low' | 'medium' | 'high';
   status: 'todo' | 'in-progress' | 'completed';
   tags: string[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface IGetTaskRequest {
