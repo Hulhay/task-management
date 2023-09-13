@@ -1,3 +1,4 @@
+import { FontSizes } from '@fluentui/react';
 import { memo } from 'react';
 
 import { headerStyle } from './headerStyle';
@@ -9,7 +10,7 @@ interface IHeader {
 const Header = ({ title }: IHeader) => {
   return (
     <div style={headerStyle}>
-      <h1>{title}</h1>
+      <h1 style={{ fontSize: FontSizes.size28, lineHeight: '1.2em' }}>{title}</h1>
     </div>
   );
 };

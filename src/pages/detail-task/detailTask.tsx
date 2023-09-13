@@ -53,6 +53,7 @@ const DetailTask = () => {
   const style: React.CSSProperties = {
     margin: '0px 15px',
     width: '100%',
+    paddingBottom: 100,
   };
   const { response, loading, request } = taskService.getTaskByID(taskID as string);
   const { loading: loadingDelete, request: requestDelete } = taskService.deleteTaskByID(
@@ -98,12 +99,6 @@ const DetailTask = () => {
                 <Text>{response?.data.description || ''}</Text>
               </Stack.Item>
               <Stack.Item>
-                <Label>{lang('detail_task.due_date')}</Label>
-                <Text>
-                  {formatDateString(response?.data.due_date, 'MMMM D, YYYY • HH:mm')}
-                </Text>
-              </Stack.Item>
-              <Stack.Item>
                 <Label>{lang('detail_task.created_at')}</Label>
                 <Text>
                   {formatDateString(response?.data.created_at, 'MMMM D, YYYY • HH:mm')}
@@ -126,6 +121,12 @@ const DetailTask = () => {
             </Stack>
 
             <Stack tokens={itemStackToken} style={{ width: '50%' }}>
+              <Stack.Item>
+                <Label>{lang('detail_task.due_date')}</Label>
+                <Text>
+                  {formatDateString(response?.data.due_date, 'MMMM D, YYYY • HH:mm')}
+                </Text>
+              </Stack.Item>
               <Stack.Item>
                 <Label>{lang('detail_task.priority')}</Label>
                 <Text>{titleCase(response?.data.priority || '')}</Text>
