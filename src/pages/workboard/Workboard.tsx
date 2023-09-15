@@ -8,6 +8,7 @@ import { Header } from '../../components';
 import { lang } from '../../utils';
 import { CustomCard } from './customCard';
 import { CustomLaneHeader } from './customLane';
+import { CustomNewCard } from './cutomNewCard';
 import { dummyData } from './dummy';
 
 const Workboard: React.FC = () => {
@@ -21,6 +22,10 @@ const Workboard: React.FC = () => {
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
+  };
+
+  const onCardAdd = (card: Card) => {
+    console.log(`${card.id} created with assignee ${card.assignee}`);
   };
 
   const onCardClick = (cardId: string) => {
@@ -97,12 +102,14 @@ const Workboard: React.FC = () => {
         cardDragClass="draggingCard"
         laneDragClass="draggingLabel"
         onCardClick={onCardClick}
+        onCardAdd={onCardAdd}
         onDataChange={onDataChange}
         onCardMoveAcrossLanes={onCardMoveAcrossLanes}
         components={{
           Card: CustomCard,
           LaneHeader: CustomLaneHeader,
           AddCardLink: CustomAddCardLink,
+          NewCardForm: CustomNewCard,
         }}
       />
       <style>
