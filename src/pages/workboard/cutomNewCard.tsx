@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { FormState, NewCardFormProps } from 'react-trello-ts/dist/components/NewCardForm';
 
 interface ExtendedFormState extends FormState {
@@ -10,19 +10,24 @@ export const CustomNewCard: React.FC<NewCardFormProps> = ({
   onAdd,
   laneId,
 }) => {
-  const titleRef = useRef<HTMLInputElement | null>(null);
-  const assigneeRef = useRef<HTMLInputElement | null>(null);
+  const [title, setTitle] = useState<string>('');
+  const [assignee, setAssignee] = useState<string>('');
+
+  const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const onAssigneeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAssignee(event.target.value);
+  };
 
   const handleAdd = () => {
-    const titleValue = titleRef.current?.value || '';
-    const assigneeValue = assigneeRef.current?.value || '';
-
     const newCardData: ExtendedFormState = {
       label: '',
       laneId,
-      title: titleValue,
+      title: title,
       description: '',
-      assignee: assigneeValue,
+      assignee: assignee,
     };
 
     onAdd(newCardData);
@@ -38,12 +43,19 @@ export const CustomNewCard: React.FC<NewCardFormProps> = ({
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-          <input type="text" placeholder="Title" ref={titleRef} style={{ padding: 5 }} />
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            style={{ padding: 5 }}
+            onChange={onTitleChange}
+          />
           <input
             type="text"
             placeholder="Assignee"
-            ref={assigneeRef}
+            value={assignee}
             style={{ padding: 5 }}
+            onChange={onAssigneeChange}
           />
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 5 }}>
