@@ -70,7 +70,7 @@ const Workboard: React.FC = () => {
         return lane;
       }),
     };
-    setBoardData(updatedBoardData);
+    onDataChange(updatedBoardData);
   };
 
   return (
