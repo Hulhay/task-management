@@ -1,0 +1,11 @@
+.draggingCard {
+    background-color: #7fffd4;
+    border: 1px dashed #a5916c;
+    transform: rotate(2deg);
+}
+
+.draggingLabel {
+    background-color: #7fffd4;
+    border: 1px dashed #a5916c;
+    transform: rotate(2deg);
+}

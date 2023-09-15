@@ -4,5 +4,6 @@ import EditTask from './edit-task';
 import Home from './home';
 import NetworkError from './network-error';
 import NotFound from './not-found';
+import Workboard from './workboard';
 
-export { CreateTask, DetailTask, EditTask, Home, NetworkError, NotFound };
+export { CreateTask, DetailTask, EditTask, Home, NetworkError, NotFound, Workboard };

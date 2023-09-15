@@ -18,6 +18,11 @@ const navLink: INavLinkGroup[] = [
         url: '/',
         key: 'home',
       },
+      {
+        name: 'Workboard',
+        url: '/workboard',
+        key: 'workboard',
+      },
     ],
   },
 ];
