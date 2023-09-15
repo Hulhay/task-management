@@ -55,14 +55,15 @@ const Workboard: React.FC = () => {
       ],
     };
 
-    const updatedBoardData = {
+    const updatedBoardData: BoardData = {
       ...boardData,
       lanes: boardData.lanes.map((lane) => {
         if (lane.id === 'TODO') {
+          const updatedCards = lane.cards ? [...lane.cards, newCard] : [newCard];
           // Update cards in the 'To Do' lane (adjust the lane ID as needed)
           return {
             ...lane,
-            cards: [...lane.cards, newCard],
+            cards: updatedCards,
           };
         }
         // For other lanes, keep them as they are
