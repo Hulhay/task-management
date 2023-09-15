@@ -1,5 +1,5 @@
 import { PrimaryButton } from '@fluentui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Board from 'react-trello-ts';
 import { BoardData, Card } from 'react-trello-ts/dist/types/Board';
 
@@ -72,6 +72,10 @@ const Workboard: React.FC = () => {
     };
     onDataChange(updatedBoardData);
   };
+
+  useEffect(() => {
+    onDataChange(boardData);
+  }, [boardData]);
 
   return (
     <div style={style}>
