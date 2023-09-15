@@ -1,6 +1,7 @@
 import { PrimaryButton } from '@fluentui/react';
 import { useEffect, useState } from 'react';
 import Board from 'react-trello-ts';
+import { AddCardLinkComponent } from 'react-trello-ts/dist/components/AddCardLink';
 import { BoardData, Card } from 'react-trello-ts/dist/types/Board';
 
 import { Header } from '../../components';
@@ -73,6 +74,12 @@ const Workboard: React.FC = () => {
     onDataChange(updatedBoardData);
   };
 
+  const CustomAddCardLink: AddCardLinkComponent = ({ onClick }) => (
+    <button onClick={onClick} style={{ padding: 5 }}>
+      +
+    </button>
+  );
+
   useEffect(() => {
     onDataChange(boardData);
   }, [boardData]);
@@ -95,6 +102,7 @@ const Workboard: React.FC = () => {
         components={{
           Card: CustomCard,
           LaneHeader: CustomLaneHeader,
+          AddCardLink: CustomAddCardLink,
         }}
       />
       <style>
@@ -105,6 +113,11 @@ const Workboard: React.FC = () => {
           }
           .react-trello-lane.todo {
             background-color: lightblue;
+          }
+          .todo > div:nth-child(2) {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 5px;
           }
         `}
       </style>

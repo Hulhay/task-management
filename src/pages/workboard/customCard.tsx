@@ -43,7 +43,20 @@ export const CustomCard: CardComponent<CustomCardProps & CardProps> = ({
       onClick={onClick}
     >
       <header>
-        <div style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>{title}</div>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 'bold',
+            marginBottom: 10,
+            width: 250,
+            whiteSpace: 'initial',
+            // textOverflow: 'ellipsis',
+            // whiteSpace: 'nowrap',
+            // overflow: 'hidden',
+          }}
+        >
+          {title}
+        </div>
       </header>
       <footer
         style={{

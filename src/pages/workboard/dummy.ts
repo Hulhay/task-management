@@ -10,7 +10,8 @@ export const dummyData: BoardData = {
       cards: [
         {
           id: 'Milk',
-          title: 'Buy milk',
+          title:
+            'Lorem ipsum dolor sit amet, consectetur tincidunt. Lorem ipsum dolor sit amet, consectetur tincidunt.',
           assignee: 'M',
           priority: 'low',
           description: '2 Gallons of milk at the Deli store',
