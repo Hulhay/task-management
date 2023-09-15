@@ -5,6 +5,7 @@ export const dummyData: BoardData = {
     {
       id: 'TODO',
       title: 'To Do',
+      label: 'todo1',
       className: 'todo',
       cards: [
         {
@@ -39,6 +40,8 @@ export const dummyData: BoardData = {
     {
       id: 'INPROGRESS',
       title: 'In Progress',
+      label: 'inprogress',
+      disallowAddingCard: true,
       cards: [
         {
           id: 'burn',
@@ -63,6 +66,8 @@ export const dummyData: BoardData = {
     {
       id: 'COMPLETED',
       title: 'Completed',
+      label: 'completed',
+      disallowAddingCard: true,
       cards: [
         {
           id: 'burn2',
