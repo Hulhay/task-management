@@ -4,6 +4,7 @@ import { AddCardLinkComponent } from 'react-trello-ts/dist/components/AddCardLin
 import { BoardData, Card } from 'react-trello-ts/dist/types/Board';
 
 import { Header, Loading } from '../../components';
+import { IUpdateTaskRequest } from '../../interface';
 import { taskService } from '../../service';
 import { lang } from '../../utils';
 import { CustomCard, CustomNewCard } from './components';
@@ -12,7 +13,9 @@ import { boardData } from './workboardProps';
 
 const Workboard: React.FC = () => {
   const [data, setData] = useState<BoardData>(boardData);
+  const [toUpdateTask, setToUpdateTask] = useState<IUpdateTaskRequest>({ taskID: '' });
   const { response, loading, request } = taskService.getTasks({});
+  const { request: requestUpdate } = taskService.updateTaskByID(toUpdateTask);
 
   const style: React.CSSProperties = {
     margin: '0px 0px 0px 15px',
@@ -27,12 +30,13 @@ const Workboard: React.FC = () => {
     console.log(`${card.id} created with assignee ${card.assignee}`);
   };
 
-  const onCardMoveAcrossLanes = (
-    fromLaneId: string,
-    toLaneId: string,
-    cardId: string,
-  ) => {
-    console.log(`card ${cardId} move from ${fromLaneId} to ${toLaneId}`);
+  const onCardMoveAcrossLanes = (toLaneId: string, cardId: string) => {
+    setToUpdateTask({
+      ...toUpdateTask,
+      taskID: cardId,
+      status: toLaneId,
+    });
+    requestUpdate();
   };
 
   const CustomAddCardLink: AddCardLinkComponent = ({ onClick }) => (

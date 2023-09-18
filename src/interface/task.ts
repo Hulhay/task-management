@@ -39,10 +39,10 @@ export interface ICreateTaskRequest {
 
 export interface IUpdateTaskRequest {
   taskID: string;
-  title: string;
-  description: string;
-  due_date: string;
-  priority: string;
-  status: string;
-  tags: string[];
+  title?: string;
+  description?: string;
+  due_date?: string;
+  priority?: string;
+  status?: string;
+  tags?: string[];
 }
