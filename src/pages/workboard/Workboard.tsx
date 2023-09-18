@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Board from 'react-trello-ts';
 import { AddCardLinkComponent } from 'react-trello-ts/dist/components/AddCardLink';
 import { BoardData, Card } from 'react-trello-ts/dist/types/Board';
 
-import { Header } from '../../components';
+import { Header, Loading } from '../../components';
+import { taskService } from '../../service';
 import { lang } from '../../utils';
-import { CustomNewCard } from './components';
-import { CustomCard } from './customCard';
+import { CustomCard, CustomNewCard } from './components';
 import { CustomLaneHeader } from './customLane';
-import { dummyData } from './dummy';
+import { boardData } from './workboardProps';
 
 const Workboard: React.FC = () => {
-  const data = dummyData;
-  const [boardData, setBoardData] = useState<BoardData>(data);
+  const [data, setData] = useState<BoardData>(boardData);
+  const { response, loading, request } = taskService.getTasks({});
 
   const style: React.CSSProperties = {
     margin: '0px 0px 0px 15px',
@@ -27,20 +27,12 @@ const Workboard: React.FC = () => {
     console.log(`${card.id} created with assignee ${card.assignee}`);
   };
 
-  const onCardClick = (cardId: string) => {
-    console.log(`${cardId} clicked`);
-  };
-
   const onCardMoveAcrossLanes = (
     fromLaneId: string,
     toLaneId: string,
     cardId: string,
   ) => {
     console.log(`card ${cardId} move from ${fromLaneId} to ${toLaneId}`);
-  };
-
-  const onDataChange = (newData: BoardData) => {
-    setBoardData(newData);
   };
 
   const CustomAddCardLink: AddCardLinkComponent = ({ onClick }) => (
@@ -50,30 +42,47 @@ const Workboard: React.FC = () => {
   );
 
   useEffect(() => {
-    onDataChange(boardData);
-  }, [boardData]);
+    request();
+  }, []);
+
+  useEffect(() => {
+    const mappedResponse = boardData.lanes.map((lane) => ({
+      ...lane,
+      cards: response?.data
+        .filter((card) => card.status === lane.id)
+        .map((card) => ({
+          id: card.id,
+          title: card.title,
+          priority: card.priority,
+          tags: card.tags.map((tag) => ({ title: tag })),
+        })),
+    }));
+    setData({ lanes: mappedResponse });
+  }, [response]);
 
   return (
     <div style={style}>
       <Header title={lang('workboard.header')} />
-      <Board
-        data={boardData}
-        editable
-        cardDragClass="draggingCard"
-        onCardClick={onCardClick}
-        onCardAdd={onCardAdd}
-        onDataChange={onDataChange}
-        onCardMoveAcrossLanes={onCardMoveAcrossLanes}
-        components={{
-          Card: CustomCard,
-          LaneHeader: CustomLaneHeader,
-          AddCardLink: CustomAddCardLink,
-          NewCardForm: CustomNewCard,
-        }}
-        style={{ backgroundColor: 'white' }}
-      />
-      <style>
-        {`
+      {loading ? (
+        <Loading />
+      ) : (
+        <React.Fragment>
+          <Board
+            data={data}
+            editable
+            cardDragClass="draggingCard"
+            onCardAdd={onCardAdd}
+            onCardMoveAcrossLanes={onCardMoveAcrossLanes}
+            components={{
+              Card: CustomCard,
+              LaneHeader: CustomLaneHeader,
+              AddCardLink: CustomAddCardLink,
+              NewCardForm: CustomNewCard,
+            }}
+            style={{ backgroundColor: 'white' }}
+          />
+          <style>
+            {`
           .react-trello-lane {
             background-color: lightblue;
             padding-bottom: 50px;
@@ -84,7 +93,9 @@ const Workboard: React.FC = () => {
             gap: 5px;
           }
         `}
-      </style>
+          </style>
+        </React.Fragment>
+      )}
     </div>
   );
 };
