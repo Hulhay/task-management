@@ -1,4 +1,3 @@
-import { PrimaryButton } from '@fluentui/react';
 import { useEffect, useState } from 'react';
 import Board from 'react-trello-ts';
 import { AddCardLinkComponent } from 'react-trello-ts/dist/components/AddCardLink';
@@ -6,9 +5,9 @@ import { BoardData, Card } from 'react-trello-ts/dist/types/Board';
 
 import { Header } from '../../components';
 import { lang } from '../../utils';
+import { CustomNewCard } from './components';
 import { CustomCard } from './customCard';
 import { CustomLaneHeader } from './customLane';
-import { CustomNewCard } from './cutomNewCard';
 import { dummyData } from './dummy';
 
 const Workboard: React.FC = () => {
@@ -44,41 +43,6 @@ const Workboard: React.FC = () => {
     setBoardData(newData);
   };
 
-  const onAddCard = () => {
-    const newCard: Card = {
-      id: Math.random().toString(),
-      title: 'dumm Buy milk',
-      assignee: 'D',
-      priority: 'low',
-      description: '2 Gallons of milk at the Deli store',
-      tags: [
-        {
-          title: 'tag1',
-        },
-        {
-          title: 'tag2',
-        },
-      ],
-    };
-
-    const updatedBoardData: BoardData = {
-      ...boardData,
-      lanes: boardData.lanes.map((lane) => {
-        if (lane.id === 'TODO') {
-          const updatedCards = lane.cards ? [...lane.cards, newCard] : [newCard];
-          // Update cards in the 'To Do' lane (adjust the lane ID as needed)
-          return {
-            ...lane,
-            cards: updatedCards,
-          };
-        }
-        // For other lanes, keep them as they are
-        return lane;
-      }),
-    };
-    onDataChange(updatedBoardData);
-  };
-
   const CustomAddCardLink: AddCardLinkComponent = ({ onClick }) => (
     <button onClick={onClick} style={{ padding: 5 }}>
       +
@@ -92,15 +56,10 @@ const Workboard: React.FC = () => {
   return (
     <div style={style}>
       <Header title={lang('workboard.header')} />
-      <PrimaryButton style={{ width: '25%' }} onClick={onAddCard}>
-        Add New Card
-      </PrimaryButton>
       <Board
         data={boardData}
-        draggable
         editable
         cardDragClass="draggingCard"
-        laneDragClass="draggingLabel"
         onCardClick={onCardClick}
         onCardAdd={onCardAdd}
         onDataChange={onDataChange}
@@ -111,15 +70,13 @@ const Workboard: React.FC = () => {
           AddCardLink: CustomAddCardLink,
           NewCardForm: CustomNewCard,
         }}
+        style={{ backgroundColor: 'white' }}
       />
       <style>
         {`
           .react-trello-lane {
-            background-color: lightgreen;
-            padding-bottom: 50px;
-          }
-          .react-trello-lane.todo {
             background-color: lightblue;
+            padding-bottom: 50px;
           }
           .todo > div:nth-child(2) {
             display: flex;
