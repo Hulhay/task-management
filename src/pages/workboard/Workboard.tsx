@@ -27,7 +27,11 @@ const Workboard: React.FC = () => {
   };
 
   const onCardAdd = (card: Card) => {
-    console.log(`${card.id} created with assignee ${card.assignee}`);
+    const targetLane = data.lanes.find((lane) => lane.id === card.laneId);
+    if (targetLane) {
+      targetLane.cards?.unshift(card);
+    }
+    setData({ lanes: [...data.lanes] });
   };
 
   const onCardMoveAcrossLanes = (toLaneId: string, cardId: string) => {

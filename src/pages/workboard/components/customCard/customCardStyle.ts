@@ -1,4 +1,4 @@
-const getPriorityColor = (priority: string) => {
+export const getPriorityColor = (priority: string) => {
   switch (priority) {
     case 'low':
       return 'orange';
