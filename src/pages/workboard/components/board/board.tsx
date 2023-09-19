@@ -15,25 +15,28 @@ const Board: React.FC<IBoard> = ({ lanes, cards, onDragEnd }) => {
   const defaultHandleDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result;
 
+    console.log(result.type);
+
     if (!destination) return;
 
-    if (result.type === 'board') {
+    if (result.type === 'BOARD') {
+      // Reorder columns
       const newColumnOrder = Array.from(Object.keys(columns));
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
-      const newColumn: Lanes = {};
+      const newColumns: Lanes = {};
       newColumnOrder.forEach((columnId) => {
-        newColumn[columnId] = columns[columnId];
+        newColumns[columnId] = columns[columnId];
       });
 
-      setColumns(newColumn);
+      setColumns(newColumns);
     } else {
       const sourceColumn = columns[source.droppableId];
       const destColumn = columns[destination.droppableId];
 
       if (source.droppableId === destination.droppableId) {
-        // Reorder within the same column
+        // Reorder tasks within the same column
         const newCardIDs = Array.from(sourceColumn.cardIDs);
         newCardIDs.splice(source.index, 1);
         newCardIDs.splice(destination.index, 0, draggableId);
@@ -48,7 +51,7 @@ const Board: React.FC<IBoard> = ({ lanes, cards, onDragEnd }) => {
           [newColumn.id]: newColumn,
         });
       } else {
-        // Move between columns
+        // Move task between columns
         const sourceCardIDs = Array.from(sourceColumn.cardIDs);
         const destCardIDs = Array.from(destColumn.cardIDs);
 
@@ -81,24 +84,26 @@ const Board: React.FC<IBoard> = ({ lanes, cards, onDragEnd }) => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      {/* <Droppable droppableId="board" type="board">
+      <Droppable droppableId="board" type="BOARD" direction="horizontal">
         {(provided: DroppableProvided) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
             className="board"
-            style={{ display: 'flex', gap: 5, minWidth: 100, backgroundColor: 'yellow' }}
-          > */}
-      <div style={{ display: 'flex', gap: 5, backgroundColor: 'yellow' }}>
-        {Object.values(columns).map((column, index) => (
-          <Lane key={column.id} lane={column} cards={cards} index={index} />
-        ))}
-      </div>
-
-      {/* {provided.placeholder}
+            style={{
+              display: 'flex',
+              gap: 5,
+              minWidth: 100,
+              backgroundColor: 'yellow',
+            }}
+          >
+            {Object.values(columns).map((column, index) => (
+              <Lane key={column.id} lane={column} cards={cards} index={index} />
+            ))}
+            {provided.placeholder}
           </div>
         )}
-      </Droppable> */}
+      </Droppable>
     </DragDropContext>
   );
 };
