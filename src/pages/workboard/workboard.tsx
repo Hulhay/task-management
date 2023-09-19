@@ -11,7 +11,7 @@ const Workboard: React.FC = () => {
   return (
     <>
       <Header title={lang('workboard.header')} />
-      <Board lanes={lanes} cards={cards} />
+      <Board lanes={lanes} cards={cards} draggableLanes />
     </>
   );
 };

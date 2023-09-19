@@ -9,13 +9,11 @@ import React, { useState } from 'react';
 import { Lane } from '../lane';
 import { IBoard, Lanes } from '../types';
 
-const Board: React.FC<IBoard> = ({ lanes, cards, onDragEnd }) => {
+const Board: React.FC<IBoard> = ({ lanes, cards, draggableLanes, onDragEnd }) => {
   const [columns, setColumns] = useState<Lanes>(lanes);
 
   const defaultHandleDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result;
-
-    console.log(result.type);
 
     if (!destination) return;
 
@@ -31,49 +29,50 @@ const Board: React.FC<IBoard> = ({ lanes, cards, onDragEnd }) => {
       });
 
       setColumns(newColumns);
+      return;
+    }
+
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
+
+    if (source.droppableId === destination.droppableId) {
+      // Reorder tasks within the same column
+      const newCardIDs = Array.from(sourceColumn.cardIDs);
+      newCardIDs.splice(source.index, 1);
+      newCardIDs.splice(destination.index, 0, draggableId);
+
+      const newColumn = {
+        ...sourceColumn,
+        cardIDs: newCardIDs,
+      };
+
+      setColumns({
+        ...columns,
+        [newColumn.id]: newColumn,
+      });
     } else {
-      const sourceColumn = columns[source.droppableId];
-      const destColumn = columns[destination.droppableId];
+      // Move task between columns
+      const sourceCardIDs = Array.from(sourceColumn.cardIDs);
+      const destCardIDs = Array.from(destColumn.cardIDs);
 
-      if (source.droppableId === destination.droppableId) {
-        // Reorder tasks within the same column
-        const newCardIDs = Array.from(sourceColumn.cardIDs);
-        newCardIDs.splice(source.index, 1);
-        newCardIDs.splice(destination.index, 0, draggableId);
+      sourceCardIDs.splice(source.index, 1);
+      destCardIDs.splice(destination.index, 0, draggableId);
 
-        const newColumn = {
-          ...sourceColumn,
-          cardIDs: newCardIDs,
-        };
+      const newSourceColumn = {
+        ...sourceColumn,
+        cardIDs: sourceCardIDs,
+      };
 
-        setColumns({
-          ...columns,
-          [newColumn.id]: newColumn,
-        });
-      } else {
-        // Move task between columns
-        const sourceCardIDs = Array.from(sourceColumn.cardIDs);
-        const destCardIDs = Array.from(destColumn.cardIDs);
+      const newDestColumn = {
+        ...destColumn,
+        cardIDs: destCardIDs,
+      };
 
-        sourceCardIDs.splice(source.index, 1);
-        destCardIDs.splice(destination.index, 0, draggableId);
-
-        const newSourceColumn = {
-          ...sourceColumn,
-          cardIDs: sourceCardIDs,
-        };
-
-        const newDestColumn = {
-          ...destColumn,
-          cardIDs: destCardIDs,
-        };
-
-        setColumns((prevColumns) => ({
-          ...prevColumns,
-          [newSourceColumn.id]: newSourceColumn,
-          [newDestColumn.id]: newDestColumn,
-        }));
-      }
+      setColumns((prevColumns) => ({
+        ...prevColumns,
+        [newSourceColumn.id]: newSourceColumn,
+        [newDestColumn.id]: newDestColumn,
+      }));
     }
   };
 
@@ -98,7 +97,13 @@ const Board: React.FC<IBoard> = ({ lanes, cards, onDragEnd }) => {
             }}
           >
             {Object.values(columns).map((column, index) => (
-              <Lane key={column.id} lane={column} cards={cards} index={index} />
+              <Lane
+                key={column.id}
+                lane={column}
+                cards={cards}
+                index={index}
+                draggableLanes={draggableLanes || false}
+              />
             ))}
             {provided.placeholder}
           </div>

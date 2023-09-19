@@ -19,6 +19,7 @@ export type Lane = {
 export type LaneProps = {
   index: number;
   lane: Lane;
+  draggableLanes: boolean;
   cards: Record<string, Card>;
 };
 
@@ -27,5 +28,6 @@ export type Lanes = Record<string, Lane>;
 export interface IBoard {
   lanes: Lanes;
   cards: Cards;
+  draggableLanes?: boolean;
   onDragEnd?: () => void;
 }

@@ -9,9 +9,14 @@ import {
 import { Card } from '../card';
 import { LaneProps } from '../types';
 
-const Lane: React.FC<LaneProps> = ({ index, lane, cards }) => {
+const Lane: React.FC<LaneProps> = ({ index, lane, cards, draggableLanes }) => {
   return (
-    <Draggable key={lane.id} draggableId={lane.id} index={index}>
+    <Draggable
+      key={lane.id}
+      draggableId={lane.id}
+      index={index}
+      isDragDisabled={!draggableLanes}
+    >
       {(provided: DraggableProvided) => (
         <div
           {...provided.draggableProps}
