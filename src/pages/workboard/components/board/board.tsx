@@ -7,25 +7,29 @@ import {
 } from '@hello-pangea/dnd';
 import React, { useState } from 'react';
 
+import { reorder, reorderCardMap } from '../helper';
 import { Lane } from '../lane';
 import { IBoard, Lanes } from '../types';
 
 const Board: React.FC<IBoard> = ({ lanes, cards, draggableLanes, onDragEnd }) => {
   const [columns, setColumns] = useState<Lanes>(lanes);
+  const orderColumn = Object.keys(columns);
 
-  const defaultHandleDragEnd = (result: DropResult) => {
+  const reorderList = (result: DropResult) => {
     const { source, destination, draggableId } = result;
 
     if (!destination) return;
 
+    // moving Lane
     if (result.type === 'BOARD') {
-      // Reorder columns
-      const newColumnOrder = Array.from(Object.keys(columns));
-      newColumnOrder.splice(source.index, 1);
-      newColumnOrder.splice(destination.index, 0, draggableId);
+      const newOrderColumn: string[] = reorder(
+        orderColumn,
+        source.index,
+        destination.index,
+      );
 
       const newColumns: Lanes = {};
-      newColumnOrder.forEach((columnId) => {
+      newOrderColumn.forEach((columnId) => {
         newColumns[columnId] = columns[columnId];
       });
 
@@ -33,52 +37,12 @@ const Board: React.FC<IBoard> = ({ lanes, cards, draggableLanes, onDragEnd }) =>
       return;
     }
 
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-
-    if (source.droppableId === destination.droppableId) {
-      // Reorder tasks within the same column
-      const newCardIDs = Array.from(sourceColumn.cardIDs);
-      newCardIDs.splice(source.index, 1);
-      newCardIDs.splice(destination.index, 0, draggableId);
-
-      const newColumn = {
-        ...sourceColumn,
-        cardIDs: newCardIDs,
-      };
-
-      setColumns({
-        ...columns,
-        [newColumn.id]: newColumn,
-      });
-    } else {
-      // Move task between columns
-      const sourceCardIDs = Array.from(sourceColumn.cardIDs);
-      const destCardIDs = Array.from(destColumn.cardIDs);
-
-      sourceCardIDs.splice(source.index, 1);
-      destCardIDs.splice(destination.index, 0, draggableId);
-
-      const newSourceColumn = {
-        ...sourceColumn,
-        cardIDs: sourceCardIDs,
-      };
-
-      const newDestColumn = {
-        ...destColumn,
-        cardIDs: destCardIDs,
-      };
-
-      setColumns((prevColumns) => ({
-        ...prevColumns,
-        [newSourceColumn.id]: newSourceColumn,
-        [newDestColumn.id]: newDestColumn,
-      }));
-    }
+    const newColumnMap = reorderCardMap(columns, source, destination, draggableId);
+    setColumns(newColumnMap);
   };
 
   const handleDragEnd = (result: DropResult) => {
-    defaultHandleDragEnd(result);
+    reorderList(result);
     if (onDragEnd) onDragEnd();
   };
 
