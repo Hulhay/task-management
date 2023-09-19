@@ -1,6 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { CreateTask, DetailTask, EditTask, Home, NetworkError, NotFound } from '../pages';
+import {
+  CreateTask,
+  DetailTask,
+  EditTask,
+  Home,
+  NetworkError,
+  NotFound,
+  Workboard,
+} from '../pages';
 import RootLayout from './layout';
 
 const Navigations = createBrowserRouter([
@@ -24,6 +32,10 @@ const Navigations = createBrowserRouter([
       {
         path: 'task/:taskID/edit',
         element: <EditTask />,
+      },
+      {
+        path: 'workboard',
+        element: <Workboard />,
       },
     ],
   },

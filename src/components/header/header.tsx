@@ -1,5 +1,4 @@
 import { FontSizes } from '@fluentui/react';
-import { memo } from 'react';
 
 import { headerStyle } from './headerStyle';
 
@@ -15,4 +14,4 @@ const Header = ({ title }: IHeader) => {
   );
 };
 
-export default memo(Header);
+export default Header;
