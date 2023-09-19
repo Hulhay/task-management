@@ -10,7 +10,13 @@ import {
 import { Card } from '../card';
 import { LaneProps } from '../types';
 
-const Lane: React.FC<LaneProps> = ({ index, lane, cards, draggableLanes }) => {
+const Lane: React.FC<LaneProps> = ({
+  index,
+  lane,
+  cards,
+  draggableLanes,
+  verticalLanes,
+}) => {
   return (
     <Draggable
       key={lane.id}
@@ -32,11 +38,16 @@ const Lane: React.FC<LaneProps> = ({ index, lane, cards, draggableLanes }) => {
           }}
         >
           <Label {...provided.dragHandleProps}>{lane.title}</Label>
-          <Droppable droppableId={lane.id} type="LANE">
+          <Droppable
+            droppableId={lane.id}
+            type="LANE"
+            direction={verticalLanes ? 'horizontal' : 'vertical'}
+          >
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 <Stack
                   className="card-list"
+                  horizontal={verticalLanes}
                   tokens={{ childrenGap: 5 }}
                   styles={{
                     root: {

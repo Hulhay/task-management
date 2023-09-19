@@ -20,6 +20,7 @@ export type LaneProps = {
   index: number;
   lane: Lane;
   draggableLanes: boolean;
+  verticalLanes: boolean;
   cards: Record<string, Card>;
 };
 
@@ -29,5 +30,6 @@ export interface IBoard {
   lanes: Lanes;
   cards: Cards;
   draggableLanes?: boolean;
+  verticalLanes?: boolean;
   onDragEnd?: () => void;
 }

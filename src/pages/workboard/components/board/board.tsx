@@ -11,7 +11,13 @@ import { reorder, reorderCardMap } from '../helper';
 import { Lane } from '../lane';
 import { IBoard, Lanes } from '../types';
 
-const Board: React.FC<IBoard> = ({ lanes, cards, draggableLanes, onDragEnd }) => {
+const Board: React.FC<IBoard> = ({
+  lanes,
+  cards,
+  draggableLanes,
+  verticalLanes,
+  onDragEnd,
+}) => {
   const [columns, setColumns] = useState<Lanes>(lanes);
   const orderColumn = Object.keys(columns);
 
@@ -48,12 +54,16 @@ const Board: React.FC<IBoard> = ({ lanes, cards, draggableLanes, onDragEnd }) =>
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="board" type="BOARD" direction="horizontal">
+      <Droppable
+        droppableId="board"
+        type="BOARD"
+        direction={verticalLanes ? 'vertical' : 'horizontal'}
+      >
         {(provided: DroppableProvided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
             <Stack
               className="board"
-              horizontal
+              horizontal={!verticalLanes}
               tokens={{ childrenGap: 5 }}
               styles={{ root: { minWidth: 100, backgroundColor: 'yellow' } }}
             >
@@ -64,6 +74,7 @@ const Board: React.FC<IBoard> = ({ lanes, cards, draggableLanes, onDragEnd }) =>
                   cards={cards}
                   index={index}
                   draggableLanes={draggableLanes || false}
+                  verticalLanes={verticalLanes || false}
                 />
               ))}
               {provided.placeholder}
