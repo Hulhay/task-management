@@ -1,3 +1,4 @@
+import { Label, Stack } from '@fluentui/react';
 import {
   Draggable,
   DraggableProvided,
@@ -30,28 +31,28 @@ const Lane: React.FC<LaneProps> = ({ index, lane, cards, draggableLanes }) => {
             minWidth: 150,
           }}
         >
-          <h2>{lane.title}</h2>
+          <Label {...provided.dragHandleProps}>{lane.title}</Label>
           <Droppable droppableId={lane.id} type="LANE">
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="card-list"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 5,
-                  backgroundColor: snapshot.isDraggingOver ? 'lightblue' : 'blue',
-                  minHeight: 200,
-                  minWidth: 150,
-                }}
-              >
-                {lane.cardIDs.map((cardId, index) => {
-                  return (
-                    <Card card={cards[cardId]} key={cards[cardId].id} index={index} />
-                  );
-                })}
-                {provided.placeholder}
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                <Stack
+                  className="card-list"
+                  tokens={{ childrenGap: 5 }}
+                  styles={{
+                    root: {
+                      backgroundColor: snapshot.isDraggingOver ? 'lightblue' : 'blue',
+                      minHeight: 200,
+                      minWidth: 150,
+                    },
+                  }}
+                >
+                  {lane.cardIDs.map((cardId, index) => {
+                    return (
+                      <Card card={cards[cardId]} key={cards[cardId].id} index={index} />
+                    );
+                  })}
+                  {provided.placeholder}
+                </Stack>
               </div>
             )}
           </Droppable>

@@ -1,3 +1,4 @@
+import { Stack } from '@fluentui/react';
 import {
   DragDropContext,
   Droppable,
@@ -85,27 +86,24 @@ const Board: React.FC<IBoard> = ({ lanes, cards, draggableLanes, onDragEnd }) =>
     <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="board" type="BOARD" direction="horizontal">
         {(provided: DroppableProvided) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            className="board"
-            style={{
-              display: 'flex',
-              gap: 5,
-              minWidth: 100,
-              backgroundColor: 'yellow',
-            }}
-          >
-            {Object.values(columns).map((column, index) => (
-              <Lane
-                key={column.id}
-                lane={column}
-                cards={cards}
-                index={index}
-                draggableLanes={draggableLanes || false}
-              />
-            ))}
-            {provided.placeholder}
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            <Stack
+              className="board"
+              horizontal
+              tokens={{ childrenGap: 5 }}
+              styles={{ root: { minWidth: 100, backgroundColor: 'yellow' } }}
+            >
+              {Object.values(columns).map((column, index) => (
+                <Lane
+                  key={column.id}
+                  lane={column}
+                  cards={cards}
+                  index={index}
+                  draggableLanes={draggableLanes || false}
+                />
+              ))}
+              {provided.placeholder}
+            </Stack>
           </div>
         )}
       </Droppable>
