@@ -15,7 +15,7 @@ export interface ICustomCard {
 
 export const CustomCard: React.FC<ICustomCard> = ({ cardTitle, cardPriority }) => {
   const borderColor: borderColorByPriority = {
-    low: 'red',
+    low: 'blue',
     medium: 'purple',
     high: 'orange',
   };
@@ -23,7 +23,11 @@ export const CustomCard: React.FC<ICustomCard> = ({ cardTitle, cardPriority }) =
   return (
     <>
       <div
-        style={{ borderLeft: `8px solid ${borderColor[cardPriority]}`, paddingLeft: 5 }}
+        style={{
+          borderLeft: `8px solid ${borderColor[cardPriority]}`,
+          paddingLeft: 5,
+          backgroundColor: 'white',
+        }}
       >
         <Label>{cardTitle}</Label>
       </div>

@@ -13,13 +13,9 @@ const CardComponent: React.FC<CardProps> = ({ card, index, cardsProps }) => {
           className="card"
           style={{
             ...provided.draggableProps.style,
-            backgroundColor: 'white',
-            padding: 5,
-            minWidth: 150,
           }}
         >
-          {cardsProps?.onRender?.(card)}
-          {/* {card.id} */}
+          {cardsProps?.onRender?.(card) || card.draggableID}
         </div>
       )}
     </Draggable>

@@ -12,7 +12,7 @@ export interface IColumnProps {
 }
 
 export interface ICardProps {
-  onRender?: (item?: any) => void;
+  onRender?: (item?: any) => JSX.Element;
 }
 
 export interface IBoard {
