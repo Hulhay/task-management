@@ -2,9 +2,9 @@ import { Draggable, DraggableProvided } from '@hello-pangea/dnd';
 
 import { CardProps } from '../types';
 
-const Card: React.FC<CardProps> = ({ card, index }) => {
+const CardComponent: React.FC<CardProps> = ({ card, index, cardsProps }) => {
   return (
-    <Draggable key={card.id} draggableId={card.id} index={index}>
+    <Draggable draggableId={card.draggableID} index={index}>
       {(provided: DraggableProvided) => (
         <div
           {...provided.draggableProps}
@@ -18,11 +18,12 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
             minWidth: 150,
           }}
         >
-          {card.content}
+          {cardsProps?.onRender?.(card)}
+          {/* {card.id} */}
         </div>
       )}
     </Draggable>
   );
 };
 
-export default Card;
+export default CardComponent;

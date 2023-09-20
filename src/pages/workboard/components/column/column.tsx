@@ -7,23 +7,12 @@ import {
   DroppableStateSnapshot,
 } from '@hello-pangea/dnd';
 
-import { Card } from '../card';
-import { LaneProps } from '../types';
+import { CardComponent } from '../card';
+import { ColumnProps } from '../types';
 
-const LaneComponent: React.FC<LaneProps> = ({
-  index,
-  lane,
-  cards,
-  draggableLanes,
-  verticalLanes,
-}) => {
+const ColumnComponent: React.FC<ColumnProps> = ({ index, column, cards, cardsProps }) => {
   return (
-    <Draggable
-      key={lane.id}
-      draggableId={lane.id}
-      index={index}
-      isDragDisabled={!draggableLanes}
-    >
+    <Draggable draggableId={column.key} index={index}>
       {(provided: DraggableProvided) => (
         <div
           {...provided.draggableProps}
@@ -37,34 +26,31 @@ const LaneComponent: React.FC<LaneProps> = ({
             minWidth: 150,
           }}
         >
-          <Label {...provided.dragHandleProps}>{lane.title}</Label>
-          <Droppable
-            droppableId={lane.id}
-            type="LANE"
-            direction={verticalLanes ? 'horizontal' : 'vertical'}
-          >
+          <Label {...provided.dragHandleProps}>{column.label}</Label>
+          <Droppable droppableId={column.key} type="COLUMN">
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 <Stack
                   className="card-list"
-                  horizontal={verticalLanes}
                   tokens={{ childrenGap: 5 }}
                   styles={{
                     root: {
-                      backgroundColor: snapshot.isDraggingOver ? 'lightblue' : 'blue',
+                      backgroundColor: snapshot.isDraggingOver
+                        ? 'lightblue'
+                        : 'lightgreen',
                       minHeight: 200,
                       minWidth: 150,
                     },
                   }}
                 >
-                  {cards.map((card, index) => (
-                    <Card card={card} key={card.id} index={index} />
+                  {cards?.map((card, index) => (
+                    <CardComponent
+                      card={card}
+                      key={index}
+                      index={index}
+                      cardsProps={cardsProps}
+                    />
                   ))}
-                  {/* {lane.cardIDs.map((cardId, index) => {
-                    return (
-                      <Card card={cards[cardId]} key={cards[cardId].id} index={index} />
-                    );
-                  })} */}
                   {provided.placeholder}
                 </Stack>
               </div>
@@ -76,4 +62,4 @@ const LaneComponent: React.FC<LaneProps> = ({
   );
 };
 
-export default LaneComponent;
+export default ColumnComponent;

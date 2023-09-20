@@ -1,1 +1,2 @@
-export * from './types';
+export * from './externalTypes';
+export * from './internalTypes';

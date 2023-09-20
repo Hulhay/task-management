@@ -1,44 +1,49 @@
-import { Card, Lane } from './components/types';
+import { IColumn } from './components/types';
 
-export const lanes: Lane[] = [
+export const lanes: IColumn[] = [
   {
-    id: 'todo',
-    title: 'To Do',
+    key: 'todo',
+    label: 'To Do',
   },
   {
-    id: 'inprogress',
-    title: 'In Progress',
+    key: 'inprogress',
+    label: 'In Progress',
   },
   {
-    id: 'completed',
-    title: 'Completed',
+    key: 'completed',
+    label: 'Completed',
   },
 ];
 
-export const cards: Card[] = [
+export const cards = [
   {
     id: 'task-1',
-    laneID: 'todo',
-    content: 'Task 1',
+    status: 'todo',
+    title: 'Task 1',
+    priority: 'low',
   },
   {
     id: 'task-2',
-    laneID: 'todo',
-    content: 'Task 2',
+    status: 'todo',
+    title: 'Task 2',
+    priority: 'low',
   },
   {
     id: 'task-3',
-    laneID: 'inprogress',
-    content: 'Task 3',
+    status: 'inprogress',
+    title: 'Task 3',
+    priority: 'medium',
   },
   {
     id: 'task-4',
-    laneID: 'todo',
-    content: 'Task 4',
+    status: 'todo',
+    title: 'Task 4',
+    priority: 'high',
   },
   {
     id: 'task-5',
-    laneID: 'inprogress',
-    content: 'Task 5',
+    status: 'inprogress',
+    title: 'Task 5',
+    priority: 'low',
   },
 ];

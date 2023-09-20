@@ -1,4 +1,4 @@
 export { Board } from './board';
-export { Card } from './card';
-export { LaneComponent } from './lane';
+export { CardComponent } from './card';
+export { ColumnComponent } from './column';
 export * from './types';

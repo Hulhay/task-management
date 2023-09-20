@@ -1,16 +1,17 @@
 import { DraggableLocation } from '@hello-pangea/dnd';
 
-import { Card, CardsMap, Lane } from '../types';
+import { CardsMap, IColumn } from '../types';
 
-export const getCardsMap = (lanes: Lane[], cards: Card[]): CardsMap => {
+export const getCardsMap = (columns: IColumn[], cards: any[], key: string): CardsMap => {
   const cardsMap: CardsMap = {};
-  lanes.forEach((lane) => {
-    cardsMap[lane.id] = [];
+  columns.forEach((column) => {
+    cardsMap[column.key] = [];
   });
 
   cards.forEach((card) => {
-    if (cardsMap[card.laneID]) {
-      cardsMap[card.laneID].push(card);
+    if (cardsMap[card[key]]) {
+      card.draggableID = Math.random().toString(16).slice(2);
+      cardsMap[card[key]].push(card);
     }
   });
 
