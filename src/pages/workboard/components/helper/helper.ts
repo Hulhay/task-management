@@ -1,6 +1,21 @@
 import { DraggableLocation } from '@hello-pangea/dnd';
 
-import { Lanes } from '../types';
+import { Card, CardsMap, Lane } from '../types';
+
+export const getCardsMap = (lanes: Lane[], cards: Card[]): CardsMap => {
+  const cardsMap: CardsMap = {};
+  lanes.forEach((lane) => {
+    cardsMap[lane.id] = [];
+  });
+
+  cards.forEach((card) => {
+    if (cardsMap[card.laneID]) {
+      cardsMap[card.laneID].push(card);
+    }
+  });
+
+  return cardsMap;
+};
 
 export const reorder = <T>(
   list: T[],
@@ -15,57 +30,29 @@ export const reorder = <T>(
 };
 
 export const reorderCardMap = (
-  columns: Lanes,
+  cardsData: CardsMap,
   source: DraggableLocation,
   destination: DraggableLocation,
-  draggableId: string,
 ) => {
-  const sourceColumn = columns[source.droppableId];
-  const destColumn = columns[destination.droppableId];
+  const newCardsData = { ...cardsData };
 
-  // moving Card within Lane
   if (source.droppableId === destination.droppableId) {
-    const newCardIDs: string[] = reorder(
-      sourceColumn.cardIDs,
+    newCardsData[source.droppableId] = reorder(
+      cardsData[source.droppableId],
       source.index,
       destination.index,
     );
-
-    const newColumn = {
-      ...sourceColumn,
-      cardIDs: newCardIDs,
-    };
-
-    const result: Lanes = {
-      ...columns,
-      [newColumn.id]: newColumn,
-    };
-
-    return result;
+    return newCardsData;
   }
 
-  // moving Card across Lane
-  const newSourceCardIDs = sourceColumn.cardIDs;
-  const newDestCardIDs = destColumn.cardIDs;
+  const sourceLaneCards = [...cardsData[source.droppableId]];
+  const destinationLaneCards = [...cardsData[destination.droppableId]];
 
-  newSourceCardIDs.splice(source.index, 1);
-  newDestCardIDs.splice(destination.index, 0, draggableId);
+  const [movedCard] = sourceLaneCards.splice(source.index, 1);
+  destinationLaneCards.splice(destination.index, 0, movedCard);
 
-  const newSourceColumn = {
-    ...sourceColumn,
-    cardIDs: newSourceCardIDs,
-  };
+  newCardsData[source.droppableId] = sourceLaneCards;
+  newCardsData[destination.droppableId] = destinationLaneCards;
 
-  const newDestColumn = {
-    ...destColumn,
-    cardIDs: newDestCardIDs,
-  };
-
-  const result: Lanes = {
-    ...columns,
-    [newSourceColumn.id]: newSourceColumn,
-    [newDestColumn.id]: newDestColumn,
-  };
-
-  return result;
+  return newCardsData;
 };

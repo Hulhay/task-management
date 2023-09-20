@@ -1,19 +1,17 @@
-export type Card = {
+export interface Card {
   id: string;
   content: string;
-};
+  laneID: string;
+}
 
-export type CardProps = {
+export interface CardProps {
   index: number;
   card: Card;
-};
-
-export type Cards = Record<string, Card>;
+}
 
 export type Lane = {
   id: string;
   title: string;
-  cardIDs: string[];
 };
 
 export type LaneProps = {
@@ -21,14 +19,14 @@ export type LaneProps = {
   lane: Lane;
   draggableLanes: boolean;
   verticalLanes: boolean;
-  cards: Record<string, Card>;
+  cards: Card[];
 };
 
-export type Lanes = Record<string, Lane>;
+export type CardsMap = Record<string, Card[]>;
 
 export interface IBoard {
-  lanes: Lanes;
-  cards: Cards;
+  lanes: Lane[];
+  cards: Card[];
   draggableLanes?: boolean;
   verticalLanes?: boolean;
   onDragEnd?: () => void;

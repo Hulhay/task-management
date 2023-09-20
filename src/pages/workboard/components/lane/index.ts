@@ -1,1 +1,1 @@
-export { default as Lane } from './lane';
+export { default as LaneComponent } from './lane';

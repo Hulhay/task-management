@@ -7,9 +7,9 @@ import {
 } from '@hello-pangea/dnd';
 import React, { useState } from 'react';
 
-import { reorder, reorderCardMap } from '../helper';
-import { Lane } from '../lane';
-import { IBoard, Lanes } from '../types';
+import { getCardsMap, reorder, reorderCardMap } from '../helper';
+import { LaneComponent } from '../lane';
+import { CardsMap, IBoard, Lane } from '../types';
 
 const Board: React.FC<IBoard> = ({
   lanes,
@@ -18,33 +18,28 @@ const Board: React.FC<IBoard> = ({
   verticalLanes,
   onDragEnd,
 }) => {
-  const [columns, setColumns] = useState<Lanes>(lanes);
-  const orderColumn = Object.keys(columns);
+  const initialCards: CardsMap = getCardsMap(lanes, cards);
+  const [lanesData, setLanesData] = useState<Lane[]>(lanes);
+  const [cardsData, setCardsData] = useState<CardsMap>(initialCards);
 
   const reorderList = (result: DropResult) => {
-    const { source, destination, draggableId } = result;
+    if (!result.destination) return;
+
+    const { source, destination } = result;
 
     if (!destination) return;
 
     // moving Lane
     if (result.type === 'BOARD') {
-      const newOrderColumn: string[] = reorder(
-        orderColumn,
-        source.index,
-        destination.index,
-      );
+      const newLanesData = reorder(lanesData, source.index, destination.index);
 
-      const newColumns: Lanes = {};
-      newOrderColumn.forEach((columnId) => {
-        newColumns[columnId] = columns[columnId];
-      });
-
-      setColumns(newColumns);
+      setLanesData(newLanesData);
       return;
     }
 
-    const newColumnMap = reorderCardMap(columns, source, destination, draggableId);
-    setColumns(newColumnMap);
+    // moving Card
+    const newCardsData = reorderCardMap(cardsData, source, destination);
+    setCardsData(newCardsData);
   };
 
   const handleDragEnd = (result: DropResult) => {
@@ -67,11 +62,11 @@ const Board: React.FC<IBoard> = ({
               tokens={{ childrenGap: 5 }}
               styles={{ root: { minWidth: 100, backgroundColor: 'yellow' } }}
             >
-              {Object.values(columns).map((column, index) => (
-                <Lane
-                  key={column.id}
-                  lane={column}
-                  cards={cards}
+              {Object.values(lanesData).map((lane, index) => (
+                <LaneComponent
+                  key={lane.id}
+                  lane={lane}
+                  cards={cardsData[lane.id]}
                   index={index}
                   draggableLanes={draggableLanes || false}
                   verticalLanes={verticalLanes || false}

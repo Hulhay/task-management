@@ -10,7 +10,7 @@ import {
 import { Card } from '../card';
 import { LaneProps } from '../types';
 
-const Lane: React.FC<LaneProps> = ({
+const LaneComponent: React.FC<LaneProps> = ({
   index,
   lane,
   cards,
@@ -57,11 +57,14 @@ const Lane: React.FC<LaneProps> = ({
                     },
                   }}
                 >
-                  {lane.cardIDs.map((cardId, index) => {
+                  {cards.map((card, index) => (
+                    <Card card={card} key={card.id} index={index} />
+                  ))}
+                  {/* {lane.cardIDs.map((cardId, index) => {
                     return (
                       <Card card={cards[cardId]} key={cards[cardId].id} index={index} />
                     );
-                  })}
+                  })} */}
                   {provided.placeholder}
                 </Stack>
               </div>
@@ -73,4 +76,4 @@ const Lane: React.FC<LaneProps> = ({
   );
 };
 
-export default Lane;
+export default LaneComponent;
