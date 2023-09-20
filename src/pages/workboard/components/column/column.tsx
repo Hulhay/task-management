@@ -10,7 +10,13 @@ import {
 import { CardComponent } from '../card';
 import { ColumnProps } from '../types';
 
-const ColumnComponent: React.FC<ColumnProps> = ({ index, column, cards, cardsProps }) => {
+const ColumnComponent: React.FC<ColumnProps> = ({
+  index,
+  column,
+  cards,
+  columnProps,
+  cardsProps,
+}) => {
   return (
     <Draggable draggableId={column.key} index={index}>
       {(provided: DraggableProvided) => (
@@ -26,7 +32,12 @@ const ColumnComponent: React.FC<ColumnProps> = ({ index, column, cards, cardsPro
             minWidth: 150,
           }}
         >
-          <Label {...provided.dragHandleProps}>{column.label}</Label>
+          <Label
+            {...provided.dragHandleProps}
+            style={{ backgroundColor: 'wheat', marginBottom: 5 }}
+          >
+            {column.label}
+          </Label>
           <Droppable droppableId={column.key} type="COLUMN">
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -56,6 +67,9 @@ const ColumnComponent: React.FC<ColumnProps> = ({ index, column, cards, cardsPro
               </div>
             )}
           </Droppable>
+          <div style={{ marginTop: 5, backgroundColor: 'wheat' }}>
+            {columnProps?.onRenderFooter?.(column)}
+          </div>
         </div>
       )}
     </Draggable>

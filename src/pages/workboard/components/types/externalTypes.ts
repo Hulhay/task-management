@@ -4,11 +4,14 @@ export interface IColumn {
   key: string;
   label: string;
   data?: any;
-  onRender?: () => any;
+  onRenderHeader?: () => JSX.Element;
+  onRenderFooter?: () => JSX.Element;
 }
 
 export interface IColumnProps {
   key: string;
+  onRenderHeader?: () => JSX.Element;
+  onRenderFooter?: (item?: any) => JSX.Element;
 }
 
 export interface ICardProps {

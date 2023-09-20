@@ -2,7 +2,7 @@ import { Label } from '@fluentui/react';
 
 import { Header } from '../../components';
 import { lang } from '../../utils';
-import { Board, ICardProps } from './components';
+import { Board, ICardProps, IColumnProps } from './components';
 import { cards, lanes } from './dummy';
 
 export type borderColorByPriority = {
@@ -13,6 +13,10 @@ export interface ICustomCard {
   cardPriority: string;
 }
 
+export interface ICustomGlobalFooterColumn {
+  maxCard: number;
+}
+
 export const CustomCard: React.FC<ICustomCard> = ({ cardTitle, cardPriority }) => {
   const borderColor: borderColorByPriority = {
     low: 'blue',
@@ -21,18 +25,22 @@ export const CustomCard: React.FC<ICustomCard> = ({ cardTitle, cardPriority }) =
   };
 
   return (
-    <>
-      <div
-        style={{
-          borderLeft: `8px solid ${borderColor[cardPriority]}`,
-          paddingLeft: 5,
-          backgroundColor: 'white',
-        }}
-      >
-        <Label>{cardTitle}</Label>
-      </div>
-    </>
+    <div
+      style={{
+        borderLeft: `8px solid ${borderColor[cardPriority]}`,
+        paddingLeft: 5,
+        backgroundColor: 'white',
+      }}
+    >
+      <Label>{cardTitle}</Label>
+    </div>
   );
+};
+
+export const CustomGlobalFooterColumn: React.FC<ICustomGlobalFooterColumn> = ({
+  maxCard,
+}) => {
+  return <div style={{ textAlign: 'center' }}>max card: {maxCard}</div>;
 };
 
 const Workboard: React.FC = () => {
@@ -42,13 +50,20 @@ const Workboard: React.FC = () => {
     },
   };
 
+  const columnProps: IColumnProps = {
+    key: 'status',
+    onRenderFooter: (column: any) => {
+      return <CustomGlobalFooterColumn maxCard={column.data.max} />;
+    },
+  };
+
   return (
     <>
       <Header title={lang('workboard.header')} />
       <Board
         columns={lanes}
         cards={cards}
-        columnProps={{ key: 'status' }}
+        columnProps={columnProps}
         cardProps={cardsProps}
       />
     </>

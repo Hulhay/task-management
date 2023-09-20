@@ -1,6 +1,6 @@
 // can only be accessed internally
 
-import { ICardProps, IColumn } from './externalTypes';
+import { ICardProps, IColumn, IColumnProps } from './externalTypes';
 
 export interface CardsMap {
   [x: string]: any[];
@@ -17,4 +17,5 @@ export interface ColumnProps {
   column: IColumn;
   cards: any[];
   cardsProps?: ICardProps;
+  columnProps?: IColumnProps;
 }

@@ -4,14 +4,23 @@ export const lanes: IColumn[] = [
   {
     key: 'todo',
     label: 'To Do',
+    data: {
+      max: 100,
+    },
   },
   {
     key: 'inprogress',
     label: 'In Progress',
+    data: {
+      max: 5,
+    },
   },
   {
     key: 'completed',
     label: 'Completed',
+    data: {
+      max: 100,
+    },
   },
 ];
 

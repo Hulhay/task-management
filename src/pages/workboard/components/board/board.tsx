@@ -57,6 +57,7 @@ const Board: React.FC<IBoard> = ({ columns, cards, columnProps, cardProps }) => 
                   column={column}
                   cards={cardsData[column.key]}
                   index={index}
+                  columnProps={columnProps}
                   cardsProps={cardProps}
                 />
               ))}
