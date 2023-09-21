@@ -40,7 +40,9 @@ const ColumnComponent: React.FC<ColumnProps> = ({
               textAlign: columnProps?.onRenderHeader ? 'left' : 'center',
             }}
           >
-            {columnProps?.onRenderHeader?.(column, cards) || column.label}
+            {column.onRenderHeader
+              ? column.onRenderHeader(column, cards)
+              : columnProps?.onRenderHeader?.(column, cards) || column.label}
           </div>
           <Droppable droppableId={column.key} type="COLUMN">
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (

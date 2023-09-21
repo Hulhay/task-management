@@ -4,7 +4,7 @@ export interface IColumn {
   key: string;
   label: string;
   data?: any;
-  onRenderHeader?: () => JSX.Element;
+  onRenderHeader?: (columnItem?: any, cardItem?: any) => JSX.Element;
   onRenderFooter?: (columnItem?: any, cardItem?: any) => JSX.Element;
 }
 

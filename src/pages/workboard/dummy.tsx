@@ -1,3 +1,5 @@
+import { Label, Stack, Text } from '@fluentui/react';
+
 import { IColumn } from './components/types';
 
 export const lanes: IColumn[] = [
@@ -31,6 +33,19 @@ export const lanes: IColumn[] = [
             ? `you have completed ${cards.length} card${cards.length > 1 ? 's' : ''}`
             : "you haven't completed card yet"}
         </div>
+      );
+    },
+    onRenderHeader: (column: any) => {
+      return (
+        <Stack
+          styles={{ root: { padding: 5, minHeight: 70 } }}
+          tokens={{ childrenGap: 5 }}
+        >
+          <Label>{column.label}</Label>
+          <Text styles={{ root: { textAlign: 'center' } }}>
+            Thank you for your hard work &#128519;
+          </Text>
+        </Stack>
       );
     },
   },
