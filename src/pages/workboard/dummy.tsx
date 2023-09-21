@@ -5,7 +5,7 @@ export const lanes: IColumn[] = [
     key: 'todo',
     label: 'To Do',
     data: {
-      max: 100,
+      max: 10,
       mustFinishedDate: '2023-09-29',
     },
   },
@@ -23,6 +23,15 @@ export const lanes: IColumn[] = [
     data: {
       max: 100,
       mustFinishedDate: '2023-10-13',
+    },
+    onRenderFooter: (_: any, cards: any) => {
+      return (
+        <div style={{ textAlign: 'center' }}>
+          {cards.length > 0
+            ? `you have completed ${cards.length} card${cards.length > 1 ? 's' : ''}`
+            : "you haven't completed card yet"}
+        </div>
+      );
     },
   },
 ];

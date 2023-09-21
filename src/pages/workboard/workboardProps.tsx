@@ -60,7 +60,9 @@ export const CustomGlobalHeaderColumn: React.FC<ICustomGlobalHeaderColumn> = ({
       {highPriorityCardCount > 0 && label !== 'Completed' && (
         <Text
           styles={{ root: { textAlign: 'center', fontWeight: 'bold' } }}
-        >{`high priority : ${highPriorityCardCount} card(s)`}</Text>
+        >{`high priority : ${highPriorityCardCount} card${
+          highPriorityCardCount > 1 ? 's' : ''
+        }`}</Text>
       )}
     </Stack>
   );

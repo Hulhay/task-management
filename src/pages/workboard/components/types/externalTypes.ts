@@ -5,7 +5,7 @@ export interface IColumn {
   label: string;
   data?: any;
   onRenderHeader?: () => JSX.Element;
-  onRenderFooter?: () => JSX.Element;
+  onRenderFooter?: (columnItem?: any, cardItem?: any) => JSX.Element;
 }
 
 export interface IColumnProps {
