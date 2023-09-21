@@ -1,6 +1,7 @@
 import { Label, Stack, Text } from '@fluentui/react';
 
 import { formatDateString } from '../../helper';
+import { ICardProps, IColumnProps } from './components';
 
 export type borderColorByPriority = {
   [x: string]: string;
@@ -20,6 +21,32 @@ export interface ICustomGlobalFooterColumn {
   cardCount: number;
   maxCard: number;
 }
+
+export const cardsProps: ICardProps = {
+  onRender: (card: any) => {
+    return <CustomCard cardTitle={card.title} cardPriority={card.priority} />;
+  },
+};
+
+export const columnProps: IColumnProps = {
+  key: 'status',
+  onRenderHeader: (column: any, cards: any) => {
+    return (
+      <CustomGlobalHeaderColumn
+        label={column.label}
+        mustFinishedDate={column.data.mustFinishedDate}
+        highPriorityCardCount={
+          cards.filter((card: any) => card.priority === 'high').length
+        }
+      />
+    );
+  },
+  onRenderFooter: (column: any, cards: any) => {
+    return (
+      <CustomGlobalFooterColumn cardCount={cards.length} maxCard={column.data.max} />
+    );
+  },
+};
 
 export const CustomCard: React.FC<ICustomCard> = ({ cardTitle, cardPriority }) => {
   const borderColor: borderColorByPriority = {

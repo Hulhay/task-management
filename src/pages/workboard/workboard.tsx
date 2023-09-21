@@ -1,40 +1,10 @@
 import { Header } from '../../components';
 import { lang } from '../../utils';
-import { Board, ICardProps, IColumnProps } from './components';
+import { Board } from './components';
 import { cards, lanes } from './dummy';
-import {
-  CustomCard,
-  CustomGlobalFooterColumn,
-  CustomGlobalHeaderColumn,
-} from './workboardProps';
+import { cardsProps, columnProps } from './workboardProps';
 
 const Workboard: React.FC = () => {
-  const cardsProps: ICardProps = {
-    onRender: (card: any) => {
-      return <CustomCard cardTitle={card.title} cardPriority={card.priority} />;
-    },
-  };
-
-  const columnProps: IColumnProps = {
-    key: 'status',
-    onRenderHeader: (column: any, cards: any) => {
-      return (
-        <CustomGlobalHeaderColumn
-          label={column.label}
-          mustFinishedDate={column.data.mustFinishedDate}
-          highPriorityCardCount={
-            cards.filter((card: any) => card.priority === 'high').length
-          }
-        />
-      );
-    },
-    onRenderFooter: (column: any, cards: any) => {
-      return (
-        <CustomGlobalFooterColumn cardCount={cards.length} maxCard={column.data.max} />
-      );
-    },
-  };
-
   return (
     <>
       <Header title={lang('workboard.header')} />
