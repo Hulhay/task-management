@@ -11,7 +11,7 @@ export interface IColumn {
 export interface IColumnProps {
   key: string;
   onRenderHeader?: () => JSX.Element;
-  onRenderFooter?: (item?: any) => JSX.Element;
+  onRenderFooter?: (columnItem?: any, cardItem?: any) => JSX.Element;
 }
 
 export interface ICardProps {

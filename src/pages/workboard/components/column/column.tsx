@@ -68,7 +68,7 @@ const ColumnComponent: React.FC<ColumnProps> = ({
             )}
           </Droppable>
           <div style={{ marginTop: 5, backgroundColor: 'wheat' }}>
-            {columnProps?.onRenderFooter?.(column)}
+            {columnProps?.onRenderFooter?.(column, cards)}
           </div>
         </div>
       )}
