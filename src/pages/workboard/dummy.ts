@@ -6,6 +6,7 @@ export const lanes: IColumn[] = [
     label: 'To Do',
     data: {
       max: 100,
+      mustFinishedDate: '2023-09-29',
     },
   },
   {
@@ -13,6 +14,7 @@ export const lanes: IColumn[] = [
     label: 'In Progress',
     data: {
       max: 5,
+      mustFinishedDate: '2023-10-06',
     },
   },
   {
@@ -20,6 +22,7 @@ export const lanes: IColumn[] = [
     label: 'Completed',
     data: {
       max: 100,
+      mustFinishedDate: '2023-10-13',
     },
   },
 ];
@@ -54,5 +57,17 @@ export const cards = [
     status: 'inprogress',
     title: 'Task 5',
     priority: 'low',
+  },
+  {
+    id: 'task-6',
+    status: 'completed',
+    title: 'Task 6',
+    priority: 'low',
+  },
+  {
+    id: 'task-7',
+    status: 'inprogress',
+    title: 'Task 7',
+    priority: 'high',
   },
 ];

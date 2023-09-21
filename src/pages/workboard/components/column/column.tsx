@@ -1,4 +1,4 @@
-import { Label, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import {
   Draggable,
   DraggableProvided,
@@ -32,12 +32,16 @@ const ColumnComponent: React.FC<ColumnProps> = ({
             minWidth: 150,
           }}
         >
-          <Label
+          <div
             {...provided.dragHandleProps}
-            style={{ backgroundColor: 'wheat', marginBottom: 5 }}
+            style={{
+              backgroundColor: 'wheat',
+              marginBottom: 5,
+              textAlign: columnProps?.onRenderHeader ? 'left' : 'center',
+            }}
           >
-            {column.label}
-          </Label>
+            {columnProps?.onRenderHeader?.(column, cards) || column.label}
+          </div>
           <Droppable droppableId={column.key} type="COLUMN">
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -50,7 +54,7 @@ const ColumnComponent: React.FC<ColumnProps> = ({
                         ? 'lightblue'
                         : 'lightgreen',
                       minHeight: 200,
-                      minWidth: 150,
+                      minWidth: 300,
                     },
                   }}
                 >

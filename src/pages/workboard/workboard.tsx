@@ -2,7 +2,11 @@ import { Header } from '../../components';
 import { lang } from '../../utils';
 import { Board, ICardProps, IColumnProps } from './components';
 import { cards, lanes } from './dummy';
-import { CustomCard, CustomGlobalFooterColumn } from './workboardProps';
+import {
+  CustomCard,
+  CustomGlobalFooterColumn,
+  CustomGlobalHeaderColumn,
+} from './workboardProps';
 
 const Workboard: React.FC = () => {
   const cardsProps: ICardProps = {
@@ -13,6 +17,17 @@ const Workboard: React.FC = () => {
 
   const columnProps: IColumnProps = {
     key: 'status',
+    onRenderHeader: (column: any, cards: any) => {
+      return (
+        <CustomGlobalHeaderColumn
+          label={column.label}
+          mustFinishedDate={column.data.mustFinishedDate}
+          highPriorityCardCount={
+            cards.filter((card: any) => card.priority === 'high').length
+          }
+        />
+      );
+    },
     onRenderFooter: (column: any, cards: any) => {
       return (
         <CustomGlobalFooterColumn cardCount={cards.length} maxCard={column.data.max} />

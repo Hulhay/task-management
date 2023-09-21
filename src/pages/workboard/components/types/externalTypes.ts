@@ -10,7 +10,7 @@ export interface IColumn {
 
 export interface IColumnProps {
   key: string;
-  onRenderHeader?: () => JSX.Element;
+  onRenderHeader?: (columnItem?: any, cardItem?: any) => JSX.Element;
   onRenderFooter?: (columnItem?: any, cardItem?: any) => JSX.Element;
 }
 
