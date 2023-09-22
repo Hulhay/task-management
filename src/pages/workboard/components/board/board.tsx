@@ -7,6 +7,7 @@ import {
 } from '@hello-pangea/dnd';
 import React, { useState } from 'react';
 
+import { AddColumn } from '../addColumn';
 import { ColumnComponent } from '../column';
 import { getCardsMap, reorder, reorderCardsMap } from '../helper';
 import { CardsMap, IBoard, IColumn } from '../types';
@@ -78,8 +79,8 @@ const Board: React.FC<IBoard> = (props) => {
     props.onCardDoubleClick?.(card);
   };
 
-  const handleColumnClick = (event: React.MouseEvent, cards: any) => {
-    props.onColumnClick?.(cards);
+  const handleColumnClick = (event: React.MouseEvent, column: any) => {
+    props.onColumnClick?.(column);
   };
 
   return (
@@ -112,6 +113,7 @@ const Board: React.FC<IBoard> = (props) => {
                 />
               ))}
               {provided.placeholder}
+              {props.columnsProps?.addColumnEnabled === false ? null : <AddColumn />}
             </Stack>
           </div>
         )}

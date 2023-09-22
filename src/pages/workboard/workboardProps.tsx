@@ -31,6 +31,7 @@ export const cardsProps: ICardsProps = {
 
 export const columnProps: IColumnsProps = {
   keyField: 'status',
+  addColumnEnabled: true,
   onRenderHeader: (cards: any, column?: IColumn) => {
     return (
       <CustomGlobalHeaderColumn
