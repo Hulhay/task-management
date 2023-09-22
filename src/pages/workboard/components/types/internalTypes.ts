@@ -10,6 +10,8 @@ export interface CardKanbanProps {
   card: any;
   index: number;
   cardsProps?: ICardsProps;
+  onCardClick?: (event: React.MouseEvent, cardItem?: any) => void;
+  onCardDoubleClick?: (event: React.MouseEvent, cardItem?: any) => void;
 }
 
 export interface ColumnKanbanProps {
@@ -20,4 +22,7 @@ export interface ColumnKanbanProps {
   columnOrientation?: 'vertical' | 'horizontal';
   cardsProps?: ICardsProps;
   columnProps?: IColumnsProps;
+  onCardClick?: (event: React.MouseEvent, cardItem?: any) => void;
+  onCardDoubleClick?: (event: React.MouseEvent, cardItem?: any) => void;
+  onColumnClick?: (event: React.MouseEvent, columnItem?: IColumn) => void;
 }

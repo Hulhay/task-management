@@ -18,6 +18,7 @@ const ColumnComponent: React.FC<ColumnKanbanProps> = (props) => {
       isDragDisabled={props.isDraggable === false ? true : false}
     >
       {(provided: DraggableProvided) => (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -29,6 +30,7 @@ const ColumnComponent: React.FC<ColumnKanbanProps> = (props) => {
             border: '2px solid #454545',
             backgroundColor: 'white',
           }}
+          onClick={(e) => props.onColumnClick?.(e, props.column)}
         >
           {/* Header Column */}
           <Stack
@@ -74,6 +76,8 @@ const ColumnComponent: React.FC<ColumnKanbanProps> = (props) => {
                       index={index}
                       card={card}
                       cardsProps={props.cardsProps}
+                      onCardClick={props.onCardClick}
+                      onCardDoubleClick={props.onCardDoubleClick}
                     />
                   ))}
                   {provided.placeholder}

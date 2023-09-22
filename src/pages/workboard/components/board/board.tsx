@@ -68,6 +68,20 @@ const Board: React.FC<IBoard> = (props) => {
     }
   };
 
+  const handleCardClick = (event: React.MouseEvent, card: any) => {
+    event.stopPropagation();
+    props.onCardClick?.(card);
+  };
+
+  const handleCardDoubleClick = (event: React.MouseEvent, card: any) => {
+    event.stopPropagation();
+    props.onCardDoubleClick?.(card);
+  };
+
+  const handleColumnClick = (event: React.MouseEvent, cards: any) => {
+    props.onColumnClick?.(cards);
+  };
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable
@@ -92,6 +106,9 @@ const Board: React.FC<IBoard> = (props) => {
                   cardsProps={props.cardsProps}
                   isDraggable={props.dragColumnEnabled}
                   columnOrientation={props.columnOrientation}
+                  onCardClick={handleCardClick}
+                  onCardDoubleClick={handleCardDoubleClick}
+                  onColumnClick={handleColumnClick}
                 />
               ))}
               {provided.placeholder}

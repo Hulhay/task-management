@@ -1,6 +1,6 @@
 import { Header } from '../../components';
 import { lang } from '../../utils';
-import { Board, IDrag } from './components';
+import { Board, IColumn, IDrag } from './components';
 import { cards, columns } from './dummy';
 import { cardsProps, columnProps } from './workboardProps';
 
@@ -19,18 +19,34 @@ const Workboard: React.FC = () => {
     );
   };
 
+  const onCardClick = (cardItem: any) => {
+    console.log(cardItem);
+  };
+
+  const onCardDoubleClick = (cardItem: any) => {
+    console.log('double-clicked');
+    console.log(cardItem);
+  };
+
+  const onColumnClick = (column?: IColumn) => {
+    console.log(column);
+  };
+
   return (
     <>
       <Header title={lang('workboard.header')} />
       <Board
         defaultColumns={columns}
         defaultCards={cards}
-        columnOrientation="horizontal"
+        columnOrientation="vertical"
         dragColumnEnabled={false}
         columnsProps={columnProps}
         cardsProps={cardsProps}
+        onCardClick={onCardClick}
+        onCardDoubleClick={onCardDoubleClick}
         onCardDragEnd={onCardDragEnd}
         onColumnDragEnd={onColumnDragEnd}
+        onColumnClick={onColumnClick}
       />
     </>
   );
