@@ -1,4 +1,5 @@
 import { Label, Stack, Text } from '@fluentui/react';
+import { useState } from 'react';
 
 import { formatDateString } from '../../helper';
 import { ICardsProps, IColumn, IColumnsProps } from './components';
@@ -31,7 +32,6 @@ export const cardsProps: ICardsProps = {
 
 export const columnProps: IColumnsProps = {
   keyField: 'status',
-  addColumnEnabled: true,
   onRenderHeader: (cards: any, column?: IColumn) => {
     return (
       <CustomGlobalHeaderColumn
@@ -107,5 +107,39 @@ export const CustomGlobalFooterColumn: React.FC<ICustomGlobalFooterColumn> = ({
 }) => {
   return (
     <div style={{ textAlign: 'center' }}>{`card capacity: ${cardCount}/${maxCard}`}</div>
+  );
+};
+
+export const CustomAddColumn: React.FC = () => {
+  const [bcAddColumn, setBcAddColumn] = useState<string>('#ffffff');
+
+  return (
+    <Stack
+      horizontalAlign="center"
+      verticalAlign="center"
+      styles={{
+        root: {
+          border: '2px dashed #454545',
+          cursor: 'pointer',
+          backgroundColor: bcAddColumn,
+          width: 50,
+        },
+      }}
+      onMouseEnter={() => setBcAddColumn('#eeeeee')}
+      onMouseLeave={() => setBcAddColumn('#ffffff')}
+    >
+      <Label
+        styles={{
+          root: {
+            cursor: 'pointer',
+            transform: 'rotate(270deg)',
+            width: 250,
+            textAlign: 'center',
+          },
+        }}
+      >
+        Custom Add Column
+      </Label>
+    </Stack>
   );
 };

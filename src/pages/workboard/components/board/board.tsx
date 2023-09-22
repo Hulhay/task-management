@@ -112,7 +112,11 @@ const Board: React.FC<IBoard> = (props) => {
                 />
               ))}
               {provided.placeholder}
-              {props.columnsProps?.addColumnEnabled === false ? null : <AddColumn />}
+              {props.addColumnEnabled === false ? null : props.onRenderAddColumnButton ? (
+                props.onRenderAddColumnButton()
+              ) : (
+                <AddColumn onAddColumnClick={props.onAddColumnClick} />
+              )}
             </Stack>
           </div>
         )}

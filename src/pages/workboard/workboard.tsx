@@ -2,7 +2,7 @@ import { Header } from '../../components';
 import { lang } from '../../utils';
 import { Board, IColumn, IDrag } from './components';
 import { cards, columns } from './dummy';
-import { cardsProps, columnProps } from './workboardProps';
+import { cardsProps, columnProps, CustomAddColumn } from './workboardProps';
 
 const Workboard: React.FC = () => {
   const onCardDragEnd = (cardItem: any, source?: IDrag, destination?: IDrag) => {
@@ -32,6 +32,10 @@ const Workboard: React.FC = () => {
     console.log(column);
   };
 
+  const onRenderAddColumnButton = () => {
+    return <CustomAddColumn />;
+  };
+
   return (
     <>
       <Header title={lang('workboard.header')} />
@@ -40,6 +44,8 @@ const Workboard: React.FC = () => {
         defaultCards={cards}
         columnOrientation="vertical"
         dragColumnEnabled={true}
+        addColumnEnabled={true}
+        onRenderAddColumnButton={onRenderAddColumnButton}
         columnsProps={columnProps}
         cardsProps={cardsProps}
         onCardClick={onCardClick}

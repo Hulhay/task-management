@@ -98,12 +98,6 @@ export interface IColumnsProps {
   keyField: string;
 
   /**
-   * Indicates whether adding a new column is enabled for the kanban board.
-   * @default true
-   */
-  addColumnEnabled?: boolean;
-
-  /**
    * Callback for rendering the header content of the column.
    * @param columnItem - The column-specific data.
    * @param cardItem - The card-specific data in the column.
@@ -118,12 +112,6 @@ export interface IColumnsProps {
    * @returns The JSX element representing the footer.
    */
   onRenderFooter?: (cardItem?: any, columnItem?: IColumn) => JSX.Element;
-
-  /**
-   * Callback for rendering a custom "Add Column" button for this column.
-   * @returns The JSX element representing the custom "Add Column" button.
-   */
-  onRenderAddColumnButton?: () => JSX.Element;
 }
 
 /**
@@ -173,6 +161,23 @@ export interface IBoard<T = any, U = any> {
    * @default true
    */
   dragColumnEnabled?: boolean;
+
+  /**
+   * Indicates whether adding a new column is enabled for the kanban board.
+   * @default true
+   */
+  addColumnEnabled?: boolean;
+
+  /**
+   * Callback for rendering a custom "Add Column" button for this column.
+   * @returns The JSX element representing the custom "Add Column" button.
+   */
+  onRenderAddColumnButton?: () => JSX.Element;
+
+  /**
+   * Callback function when a button add column is clicked.
+   */
+  onAddColumnClick?: () => void;
 
   /**
    * Callback function when a card is clicked.

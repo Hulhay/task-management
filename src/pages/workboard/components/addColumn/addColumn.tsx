@@ -1,7 +1,9 @@
 import { Icon, Label, Stack } from '@fluentui/react';
 import { useState } from 'react';
 
-const AddColumn: React.FC = () => {
+import { AddColumnKanbanProps } from '../types';
+
+const AddColumn: React.FC<AddColumnKanbanProps> = (props) => {
   const [bcAddColumn, setBcAddColumn] = useState<string>('#ffffff');
 
   return (
@@ -18,6 +20,7 @@ const AddColumn: React.FC = () => {
       }}
       onMouseEnter={() => setBcAddColumn('#eeeeee')}
       onMouseLeave={() => setBcAddColumn('#ffffff')}
+      onClick={props.onAddColumnClick}
     >
       <Label styles={{ root: { cursor: 'pointer' } }}>
         <Icon iconName="Add" />

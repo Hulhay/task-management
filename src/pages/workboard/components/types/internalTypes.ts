@@ -26,3 +26,7 @@ export interface ColumnKanbanProps {
   onCardDoubleClick?: (event: React.MouseEvent, cardItem?: any) => void;
   onColumnClick?: (event: React.MouseEvent, columnItem?: IColumn) => void;
 }
+
+export interface AddColumnKanbanProps {
+  onAddColumnClick?: () => void;
+}
