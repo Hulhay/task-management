@@ -10,7 +10,6 @@ export const getCardsMap = (columns: IColumn[], cards: any[], key: string): Card
 
   cards.forEach((card) => {
     if (cardsMap[card[key]]) {
-      card.draggableID = Math.random().toString(16).slice(2);
       cardsMap[card[key]].push(card);
     }
   });
@@ -30,7 +29,7 @@ export const reorder = <T>(
   return result;
 };
 
-export const reorderCardMap = (
+export const reorderCardsMap = (
   cardsData: CardsMap,
   source: DraggableLocation,
   destination: DraggableLocation,
@@ -46,14 +45,14 @@ export const reorderCardMap = (
     return newCardsData;
   }
 
-  const sourceLaneCards = [...cardsData[source.droppableId]];
-  const destinationLaneCards = [...cardsData[destination.droppableId]];
+  const sourceColumnCards = [...cardsData[source.droppableId]];
+  const destinationColumnCards = [...cardsData[destination.droppableId]];
 
-  const [movedCard] = sourceLaneCards.splice(source.index, 1);
-  destinationLaneCards.splice(destination.index, 0, movedCard);
+  const [movedCard] = sourceColumnCards.splice(source.index, 1);
+  destinationColumnCards.splice(destination.index, 0, movedCard);
 
-  newCardsData[source.droppableId] = sourceLaneCards;
-  newCardsData[destination.droppableId] = destinationLaneCards;
+  newCardsData[source.droppableId] = sourceColumnCards;
+  newCardsData[destination.droppableId] = destinationColumnCards;
 
   return newCardsData;
 };

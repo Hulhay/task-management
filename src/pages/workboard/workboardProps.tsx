@@ -1,7 +1,7 @@
 import { Label, Stack, Text } from '@fluentui/react';
 
 import { formatDateString } from '../../helper';
-import { ICardProps, IColumnProps } from './components';
+import { ICardsProps, IColumn, IColumnsProps } from './components';
 
 export type borderColorByPriority = {
   [x: string]: string;
@@ -22,28 +22,29 @@ export interface ICustomGlobalFooterColumn {
   maxCard: number;
 }
 
-export const cardsProps: ICardProps = {
+export const cardsProps: ICardsProps = {
+  keyField: 'id',
   onRender: (card: any) => {
     return <CustomCard cardTitle={card.title} cardPriority={card.priority} />;
   },
 };
 
-export const columnProps: IColumnProps = {
-  key: 'status',
-  onRenderHeader: (column: any, cards: any) => {
+export const columnProps: IColumnsProps = {
+  keyField: 'status',
+  onRenderHeader: (cards: any, column?: IColumn) => {
     return (
       <CustomGlobalHeaderColumn
-        label={column.label}
-        mustFinishedDate={column.data.mustFinishedDate}
+        label={column?.label || ''}
+        mustFinishedDate={column?.data.mustFinishedDate}
         highPriorityCardCount={
           cards.filter((card: any) => card.priority === 'high').length
         }
       />
     );
   },
-  onRenderFooter: (column: any, cards: any) => {
+  onRenderFooter: (cards: any, column?: IColumn) => {
     return (
-      <CustomGlobalFooterColumn cardCount={cards.length} maxCard={column.data.max} />
+      <CustomGlobalFooterColumn cardCount={cards.length} maxCard={column?.data.max} />
     );
   },
 };
@@ -58,6 +59,10 @@ export const CustomCard: React.FC<ICustomCard> = ({ cardTitle, cardPriority }) =
   return (
     <div
       style={{
+        margin: 5,
+        borderTop: '1px solid #454545',
+        borderRight: '1px solid #454545',
+        borderBottom: '1px solid #454545',
         borderLeft: `8px solid ${borderColor[cardPriority]}`,
         paddingLeft: 5,
         backgroundColor: 'white',

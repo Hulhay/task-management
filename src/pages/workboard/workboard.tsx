@@ -1,18 +1,35 @@
 import { Header } from '../../components';
 import { lang } from '../../utils';
-import { Board } from './components';
-import { cards, lanes } from './dummy';
+import { Board, IDrag } from './components';
+import { cards, columns } from './dummy';
 import { cardsProps, columnProps } from './workboardProps';
 
 const Workboard: React.FC = () => {
+  const onCardDragEnd = (cardItem: any, source?: IDrag, destination?: IDrag) => {
+    console.log(`${cardItem.id} move from ${source?.key} to ${destination?.key}`);
+  };
+
+  const onColumnDragEnd = (
+    columnItem: any,
+    sourceIndex?: number,
+    destinationIndex?: number,
+  ) => {
+    console.log(
+      `${columnItem.key} move from index ${sourceIndex} to ${destinationIndex}`,
+    );
+  };
+
   return (
     <>
       <Header title={lang('workboard.header')} />
       <Board
-        columns={lanes}
-        cards={cards}
-        columnProps={columnProps}
-        cardProps={cardsProps}
+        defaultColumns={columns}
+        defaultCards={cards}
+        dragColumnEnabled={false}
+        columnsProps={columnProps}
+        cardsProps={cardsProps}
+        onCardDragEnd={onCardDragEnd}
+        onColumnDragEnd={onColumnDragEnd}
       />
     </>
   );

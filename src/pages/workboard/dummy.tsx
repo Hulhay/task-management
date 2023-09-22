@@ -2,7 +2,7 @@ import { Label, Stack, Text } from '@fluentui/react';
 
 import { IColumn } from './components/types';
 
-export const lanes: IColumn[] = [
+export const columns: IColumn[] = [
   {
     key: 'todo',
     label: 'To Do',
@@ -26,7 +26,7 @@ export const lanes: IColumn[] = [
       max: 100,
       mustFinishedDate: '2023-10-13',
     },
-    onRenderFooter: (_: any, cards: any) => {
+    onRenderFooter: (cards: any) => {
       return (
         <div style={{ textAlign: 'center' }}>
           {cards.length > 0
@@ -35,7 +35,7 @@ export const lanes: IColumn[] = [
         </div>
       );
     },
-    onRenderHeader: (column: any) => {
+    onRenderHeader: (_: any, column: any) => {
       return (
         <Stack
           styles={{ root: { padding: 5, minHeight: 70 } }}

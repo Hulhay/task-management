@@ -8,17 +8,19 @@ import {
 import React, { useState } from 'react';
 
 import { ColumnComponent } from '../column';
-import { getCardsMap, reorder, reorderCardMap } from '../helper';
+import { getCardsMap, reorder, reorderCardsMap } from '../helper';
 import { CardsMap, IBoard, IColumn } from '../types';
 
-const Board: React.FC<IBoard> = ({ columns, cards, columnProps, cardProps }) => {
-  const initialCards: CardsMap = getCardsMap(columns, cards, columnProps.key);
-  const [columnsData, setColumnsData] = useState<IColumn[]>(columns);
+const Board: React.FC<IBoard> = (props) => {
+  const initialCards: CardsMap = getCardsMap(
+    props.defaultColumns || [],
+    props.defaultCards || [],
+    props.columnsProps?.keyField || '',
+  );
+  const [columnsData, setColumnsData] = useState<IColumn[]>(props.defaultColumns || []);
   const [cardsData, setCardsData] = useState<CardsMap>(initialCards);
 
   const reorderList = (result: DropResult) => {
-    if (!result.destination) return;
-
     const { source, destination } = result;
 
     if (!destination) return;
@@ -32,12 +34,38 @@ const Board: React.FC<IBoard> = ({ columns, cards, columnProps, cardProps }) => 
     }
 
     // moving Card
-    const newCardsData = reorderCardMap(cardsData, source, destination);
+    const newCardsData = reorderCardsMap(cardsData, source, destination);
     setCardsData(newCardsData);
   };
 
   const handleDragEnd = (result: DropResult) => {
     reorderList(result);
+
+    const { type, source, destination } = result;
+
+    if (type === 'COLUMN') {
+      const card = cardsData[source.droppableId][source.index];
+      if (props.onCardDragEnd) {
+        props.onCardDragEnd(
+          card,
+          { key: source.droppableId, index: source.index },
+          {
+            key: destination?.droppableId || '',
+            index: destination?.index || -1,
+          },
+        );
+      }
+    }
+
+    if (type === 'BOARD') {
+      if (props.onColumnDragEnd) {
+        props.onColumnDragEnd(
+          columnsData[source.index],
+          source.index,
+          destination?.index,
+        );
+      }
+    }
   };
 
   return (
@@ -45,20 +73,16 @@ const Board: React.FC<IBoard> = ({ columns, cards, columnProps, cardProps }) => 
       <Droppable droppableId="board" type="BOARD" direction={'horizontal'}>
         {(provided: DroppableProvided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            <Stack
-              className="board"
-              tokens={{ childrenGap: 5 }}
-              styles={{ root: { minWidth: 100, backgroundColor: 'yellow' } }}
-              horizontal
-            >
+            <Stack className="board" tokens={{ childrenGap: 5 }} horizontal>
               {Object.values(columnsData).map((column, index) => (
                 <ColumnComponent
                   key={column.key}
+                  index={index}
                   column={column}
                   cards={cardsData[column.key]}
-                  index={index}
-                  columnProps={columnProps}
-                  cardsProps={cardProps}
+                  columnProps={props.columnsProps}
+                  cardsProps={props.cardsProps}
+                  isDraggable={props.dragColumnEnabled}
                 />
               ))}
               {provided.placeholder}

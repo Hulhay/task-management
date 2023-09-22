@@ -8,43 +8,47 @@ import {
 } from '@hello-pangea/dnd';
 
 import { CardComponent } from '../card';
-import { ColumnProps } from '../types';
+import { ColumnKanbanProps } from '../types';
 
-const ColumnComponent: React.FC<ColumnProps> = ({
-  index,
-  column,
-  cards,
-  columnProps,
-  cardsProps,
-}) => {
+const ColumnComponent: React.FC<ColumnKanbanProps> = (props) => {
   return (
-    <Draggable draggableId={column.key} index={index}>
+    <Draggable
+      draggableId={props.column.key}
+      index={props.index}
+      isDragDisabled={!props.isDraggable}
+    >
       {(provided: DraggableProvided) => (
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          className="lane"
+          className="column"
           style={{
             ...provided.draggableProps.style,
-            backgroundColor: 'red',
             padding: 5,
-            minWidth: 150,
+            border: '2px solid #454545',
+            backgroundColor: 'white',
           }}
         >
-          <div
+          {/* Header Column */}
+          <Stack
             {...provided.dragHandleProps}
+            className="column-header"
             style={{
-              backgroundColor: 'wheat',
               marginBottom: 5,
-              textAlign: columnProps?.onRenderHeader ? 'left' : 'center',
+              border: '2px solid #454545',
+              textAlign: props.columnProps?.onRenderHeader ? 'left' : 'center',
             }}
           >
-            {column.onRenderHeader
-              ? column.onRenderHeader(column, cards)
-              : columnProps?.onRenderHeader?.(column, cards) || column.label}
-          </div>
-          <Droppable droppableId={column.key} type="COLUMN">
+            {props.column.onRenderHeader
+              ? props.column.onRenderHeader(props.cards, props.column)
+              : props.columnProps?.onRenderHeader
+              ? props.columnProps?.onRenderHeader?.(props.cards, props.column)
+              : props.column.label}
+          </Stack>
+
+          {/* Droppable Area */}
+          <Droppable droppableId={props.column.key} type="COLUMN">
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 <Stack
@@ -52,20 +56,19 @@ const ColumnComponent: React.FC<ColumnProps> = ({
                   tokens={{ childrenGap: 5 }}
                   styles={{
                     root: {
-                      backgroundColor: snapshot.isDraggingOver
-                        ? 'lightblue'
-                        : 'lightgreen',
-                      minHeight: 200,
-                      minWidth: 300,
+                      border: '2px solid #454545',
+                      backgroundColor: snapshot.isDraggingOver ? '#dddddd' : 'white',
+                      minHeight: 50,
+                      minWidth: 250,
                     },
                   }}
                 >
-                  {cards?.map((card, index) => (
+                  {props.cards?.map((card, index) => (
                     <CardComponent
-                      card={card}
-                      key={index}
+                      key={card[props.cardsProps?.keyField as string]}
                       index={index}
-                      cardsProps={cardsProps}
+                      card={card}
+                      cardsProps={props.cardsProps}
                     />
                   ))}
                   {provided.placeholder}
@@ -73,10 +76,12 @@ const ColumnComponent: React.FC<ColumnProps> = ({
               </div>
             )}
           </Droppable>
-          <div style={{ marginTop: 5, backgroundColor: 'wheat' }}>
-            {column.onRenderFooter
-              ? column.onRenderFooter(column, cards)
-              : columnProps?.onRenderFooter?.(column, cards)}
+
+          {/* Column Footer */}
+          <div style={{ marginTop: 5, border: '2px solid #454545' }}>
+            {props.column.onRenderFooter
+              ? props.column.onRenderFooter?.(props.cards, props.column)
+              : props.columnProps?.onRenderFooter?.(props.cards, props.column)}
           </div>
         </div>
       )}

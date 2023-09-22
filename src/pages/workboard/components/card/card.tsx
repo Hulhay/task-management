@@ -1,10 +1,12 @@
 import { Draggable, DraggableProvided } from '@hello-pangea/dnd';
 
-import { CardProps } from '../types';
+import { CardKanbanProps } from '../types';
 
-const CardComponent: React.FC<CardProps> = ({ card, index, cardsProps }) => {
+const Card: React.FC<CardKanbanProps> = (props) => {
+  const cardKey = props.card[props.cardsProps?.keyField as string];
+
   return (
-    <Draggable draggableId={card.draggableID} index={index}>
+    <Draggable draggableId={cardKey} index={props.index}>
       {(provided: DraggableProvided) => (
         <div
           {...provided.draggableProps}
@@ -15,11 +17,13 @@ const CardComponent: React.FC<CardProps> = ({ card, index, cardsProps }) => {
             ...provided.draggableProps.style,
           }}
         >
-          {cardsProps?.onRender?.(card) || card.draggableID}
+          {props.cardsProps?.onRender
+            ? props.cardsProps?.onRender?.(props.card)
+            : cardKey}
         </div>
       )}
     </Draggable>
   );
 };
 
-export default CardComponent;
+export default Card;

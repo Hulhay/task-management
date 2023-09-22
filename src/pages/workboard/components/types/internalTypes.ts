@@ -1,21 +1,22 @@
 // can only be accessed internally
 
-import { ICardProps, IColumn, IColumnProps } from './externalTypes';
+import { ICardsProps, IColumn, IColumnsProps } from './externalTypes';
 
-export interface CardsMap {
-  [x: string]: any[];
+export interface CardsMap<T = any> {
+  [x: string]: T[];
 }
 
-export interface CardProps {
+export interface CardKanbanProps {
   card: any;
   index: number;
-  cardsProps?: ICardProps;
+  cardsProps?: ICardsProps;
 }
 
-export interface ColumnProps {
+export interface ColumnKanbanProps {
+  cards: any[];
   index: number;
   column: IColumn;
-  cards: any[];
-  cardsProps?: ICardProps;
-  columnProps?: IColumnProps;
+  isDraggable?: boolean;
+  cardsProps?: ICardsProps;
+  columnProps?: IColumnsProps;
 }
