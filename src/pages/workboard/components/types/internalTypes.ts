@@ -17,6 +17,7 @@ export interface ColumnKanbanProps {
   index: number;
   column: IColumn;
   isDraggable?: boolean;
+  columnOrientation?: 'vertical' | 'horizontal';
   cardsProps?: ICardsProps;
   columnProps?: IColumnsProps;
 }

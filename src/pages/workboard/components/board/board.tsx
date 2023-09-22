@@ -70,10 +70,18 @@ const Board: React.FC<IBoard> = (props) => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="board" type="BOARD" direction={'horizontal'}>
+      <Droppable
+        droppableId="board"
+        type="BOARD"
+        direction={props.columnOrientation === 'horizontal' ? 'vertical' : 'horizontal'}
+      >
         {(provided: DroppableProvided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            <Stack className="board" tokens={{ childrenGap: 5 }} horizontal>
+            <Stack
+              className="board"
+              tokens={{ childrenGap: 5 }}
+              horizontal={props.columnOrientation === 'horizontal' ? false : true}
+            >
               {Object.values(columnsData).map((column, index) => (
                 <ColumnComponent
                   key={column.key}
@@ -83,6 +91,7 @@ const Board: React.FC<IBoard> = (props) => {
                   columnProps={props.columnsProps}
                   cardsProps={props.cardsProps}
                   isDraggable={props.dragColumnEnabled}
+                  columnOrientation={props.columnOrientation}
                 />
               ))}
               {provided.placeholder}

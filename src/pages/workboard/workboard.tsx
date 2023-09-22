@@ -25,6 +25,7 @@ const Workboard: React.FC = () => {
       <Board
         defaultColumns={columns}
         defaultCards={cards}
+        columnOrientation="horizontal"
         dragColumnEnabled={false}
         columnsProps={columnProps}
         cardsProps={cardsProps}

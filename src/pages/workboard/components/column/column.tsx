@@ -15,7 +15,7 @@ const ColumnComponent: React.FC<ColumnKanbanProps> = (props) => {
     <Draggable
       draggableId={props.column.key}
       index={props.index}
-      isDragDisabled={!props.isDraggable}
+      isDragDisabled={props.isDraggable === false ? true : false}
     >
       {(provided: DraggableProvided) => (
         <div
@@ -48,12 +48,17 @@ const ColumnComponent: React.FC<ColumnKanbanProps> = (props) => {
           </Stack>
 
           {/* Droppable Area */}
-          <Droppable droppableId={props.column.key} type="COLUMN">
+          <Droppable
+            droppableId={props.column.key}
+            type="COLUMN"
+            direction={props.columnOrientation}
+          >
             {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 <Stack
                   className="card-list"
                   tokens={{ childrenGap: 5 }}
+                  horizontal={props.columnOrientation === 'horizontal' ? true : false}
                   styles={{
                     root: {
                       border: '2px solid #454545',
