@@ -21,30 +21,28 @@ const Board: React.FC<IBoard> = (props) => {
   const [columnsData, setColumnsData] = useState<IColumn[]>(props.defaultColumns || []);
   const [cardsData, setCardsData] = useState<CardsMap>(initialCards);
 
-  const reorderList = (result: DropResult) => {
+  const reorderColumns = (result: DropResult) => {
     const { source, destination } = result;
-
     if (!destination) return;
 
-    // moving Lane
-    if (result.type === 'BOARD') {
-      const newLanesData = reorder(columnsData, source.index, destination.index);
+    const newLanesData = reorder(columnsData, source.index, destination.index);
+    setColumnsData(newLanesData);
+  };
 
-      setColumnsData(newLanesData);
-      return;
-    }
+  const reorderCards = (result: DropResult) => {
+    const { source, destination } = result;
+    if (!destination) return;
 
-    // moving Card
     const newCardsData = reorderCardsMap(cardsData, source, destination);
     setCardsData(newCardsData);
   };
 
   const handleDragEnd = (result: DropResult) => {
-    reorderList(result);
-
+    // type show droppable location
     const { type, source, destination } = result;
 
     if (type === 'COLUMN') {
+      reorderCards(result);
       const card = cardsData[source.droppableId][source.index];
       if (props.onCardDragEnd) {
         props.onCardDragEnd(
@@ -59,6 +57,7 @@ const Board: React.FC<IBoard> = (props) => {
     }
 
     if (type === 'BOARD') {
+      reorderColumns(result);
       if (props.onColumnDragEnd) {
         props.onColumnDragEnd(
           columnsData[source.index],

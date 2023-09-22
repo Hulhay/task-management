@@ -39,7 +39,7 @@ const Workboard: React.FC = () => {
         defaultColumns={columns}
         defaultCards={cards}
         columnOrientation="vertical"
-        dragColumnEnabled={false}
+        dragColumnEnabled={true}
         columnsProps={columnProps}
         cardsProps={cardsProps}
         onCardClick={onCardClick}
