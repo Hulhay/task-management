@@ -1,6 +1,8 @@
 import { Stack } from '@fluentui/react';
 import {
   DragDropContext,
+  DragStart,
+  DragUpdate,
   Droppable,
   DroppableProvided,
   DropResult,
@@ -85,8 +87,50 @@ const Board: React.FC<IBoard> = (props) => {
     props.onColumnClick?.(column);
   };
 
+  const handleDragStart = (start: DragStart) => {
+    // type show droppable location
+    const { type, source } = start;
+
+    if (type === 'COLUMN') {
+      const card = cardsData[source.droppableId][source.index];
+      if (props.onCardDragStart) {
+        props.onCardDragStart(card);
+      }
+    }
+
+    if (type === 'BOARD') {
+      const column = columnsData[source.index];
+      if (props.onColumnDragStart) {
+        props.onColumnDragStart(column);
+      }
+    }
+  };
+
+  const handleDrag = (update: DragUpdate) => {
+    // type show droppable location
+    const { type, source } = update;
+
+    if (type === 'COLUMN') {
+      const card = cardsData[source.droppableId][source.index];
+      if (props.onCardDrag) {
+        props.onCardDrag(card);
+      }
+    }
+
+    if (type === 'BOARD') {
+      const column = columnsData[source.index];
+      if (props.onColumnDrag) {
+        props.onColumnDrag(column);
+      }
+    }
+  };
+
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
+    <DragDropContext
+      onDragStart={handleDragStart}
+      onDragUpdate={handleDrag}
+      onDragEnd={handleDragEnd}
+    >
       <Droppable
         droppableId="board"
         type="BOARD"

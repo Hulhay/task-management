@@ -3,7 +3,6 @@ import { DraggableLocation } from '@hello-pangea/dnd';
 import { CardsMap, IColumn } from '../types';
 
 export const getCardsMap = (columns: IColumn[], cards: any[], key: string): CardsMap => {
-  console.log('called');
   const cardsMap: CardsMap = {};
   columns.forEach((column) => {
     cardsMap[column.key] = [];
