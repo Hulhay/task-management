@@ -160,7 +160,10 @@ const Board: React.FC<IBoard> = (props) => {
               ))}
               {provided.placeholder}
               {props.addColumnEnabled === false ? null : props.onRenderAddColumnButton ? (
-                props.onRenderAddColumnButton()
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+                <div onClick={props.onAddColumnClick}>
+                  {props.onRenderAddColumnButton()}
+                </div>
               ) : (
                 <AddColumn onAddColumnClick={props.onAddColumnClick} />
               )}

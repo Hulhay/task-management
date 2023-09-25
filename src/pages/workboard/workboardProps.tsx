@@ -123,6 +123,7 @@ export const CustomAddColumn: React.FC = () => {
           cursor: 'pointer',
           backgroundColor: bcAddColumn,
           width: 50,
+          height: '100%',
         },
       }}
       onMouseEnter={() => setBcAddColumn('#eeeeee')}
