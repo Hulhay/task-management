@@ -44,7 +44,7 @@ const Board: React.FC<IBoard> = (props) => {
 
     if (type === 'COLUMN') {
       const newOrderCards = reorderCards(result);
-      if (newOrderCards) setCardsData(newOrderCards);
+      newOrderCards && setCardsData(newOrderCards);
 
       const card = cardsData[source.droppableId][source.index];
       const sourceCard: IDrag = {
@@ -62,7 +62,7 @@ const Board: React.FC<IBoard> = (props) => {
 
     if (type === 'BOARD') {
       const newOrderColumns = reorderColumns(result);
-      if (newOrderColumns) setColumnsData(newOrderColumns);
+      newOrderColumns && setColumnsData(newOrderColumns);
 
       const column = columnsData[source.index];
       if (props.onColumnDragEnd) {
@@ -91,16 +91,12 @@ const Board: React.FC<IBoard> = (props) => {
 
     if (type === 'COLUMN') {
       const card = cardsData[source.droppableId][source.index];
-      if (props.onCardDragStart) {
-        props.onCardDragStart(card);
-      }
+      props.onCardDragStart?.(card);
     }
 
     if (type === 'BOARD') {
       const column = columnsData[source.index];
-      if (props.onColumnDragStart) {
-        props.onColumnDragStart(column);
-      }
+      props.onColumnDragStart?.(column);
     }
   };
 
@@ -110,16 +106,12 @@ const Board: React.FC<IBoard> = (props) => {
 
     if (type === 'COLUMN') {
       const card = cardsData[source.droppableId][source.index];
-      if (props.onCardDrag) {
-        props.onCardDrag(card);
-      }
+      props.onCardDrag?.(card);
     }
 
     if (type === 'BOARD') {
       const column = columnsData[source.index];
-      if (props.onColumnDrag) {
-        props.onColumnDrag(column);
-      }
+      props.onColumnDrag?.(column);
     }
   };
 
