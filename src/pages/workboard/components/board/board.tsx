@@ -12,7 +12,7 @@ import React, { useMemo, useState } from 'react';
 import { AddColumn } from '../addColumn';
 import { ColumnComponent } from '../column';
 import { getCardsMap, reorder, reorderCardsMap } from '../helper';
-import { CardsMap, IBoard, IColumn } from '../types';
+import { CardsMap, IBoard, IColumn, IDrag } from '../types';
 
 const Board: React.FC<IBoard> = (props) => {
   const initialCards: CardsMap = useMemo(() => {
@@ -29,17 +29,13 @@ const Board: React.FC<IBoard> = (props) => {
   const reorderColumns = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) return;
-
-    const newLanesData = reorder(columnsData, source.index, destination.index);
-    setColumnsData(newLanesData);
+    return reorder(columnsData, source.index, destination.index);
   };
 
   const reorderCards = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) return;
-
-    const newCardsData = reorderCardsMap(cardsData, source, destination);
-    setCardsData(newCardsData);
+    return reorderCardsMap(cardsData, source, destination);
   };
 
   const handleDragEnd = (result: DropResult) => {
@@ -47,28 +43,30 @@ const Board: React.FC<IBoard> = (props) => {
     const { type, source, destination } = result;
 
     if (type === 'COLUMN') {
-      reorderCards(result);
+      const newOrderCards = reorderCards(result);
+      if (newOrderCards) setCardsData(newOrderCards);
+
       const card = cardsData[source.droppableId][source.index];
+      const sourceCard: IDrag = {
+        key: source.droppableId,
+        index: source.index,
+      };
+      const destinationCard: IDrag = {
+        key: destination?.droppableId || '',
+        index: destination?.index || -1,
+      };
       if (props.onCardDragEnd) {
-        props.onCardDragEnd(
-          card,
-          { key: source.droppableId, index: source.index },
-          {
-            key: destination?.droppableId || '',
-            index: destination?.index || -1,
-          },
-        );
+        props.onCardDragEnd(card, sourceCard, destinationCard);
       }
     }
 
     if (type === 'BOARD') {
-      reorderColumns(result);
+      const newOrderColumns = reorderColumns(result);
+      if (newOrderColumns) setColumnsData(newOrderColumns);
+
+      const column = columnsData[source.index];
       if (props.onColumnDragEnd) {
-        props.onColumnDragEnd(
-          columnsData[source.index],
-          source.index,
-          destination?.index,
-        );
+        props.onColumnDragEnd(column, source.index, destination?.index);
       }
     }
   };
