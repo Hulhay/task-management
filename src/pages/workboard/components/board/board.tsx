@@ -5,7 +5,7 @@ import {
   DroppableProvided,
   DropResult,
 } from '@hello-pangea/dnd';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { AddColumn } from '../addColumn';
 import { ColumnComponent } from '../column';
@@ -13,11 +13,14 @@ import { getCardsMap, reorder, reorderCardsMap } from '../helper';
 import { CardsMap, IBoard, IColumn } from '../types';
 
 const Board: React.FC<IBoard> = (props) => {
-  const initialCards: CardsMap = getCardsMap(
-    props.defaultColumns || [],
-    props.defaultCards || [],
-    props.columnsProps?.keyField || '',
-  );
+  const initialCards: CardsMap = useMemo(() => {
+    return getCardsMap(
+      props.defaultColumns || [],
+      props.defaultCards || [],
+      props.columnsProps?.keyField || '',
+    );
+  }, []);
+
   const [columnsData, setColumnsData] = useState<IColumn[]>(props.defaultColumns || []);
   const [cardsData, setCardsData] = useState<CardsMap>(initialCards);
 
