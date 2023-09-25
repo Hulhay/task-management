@@ -1,3 +1,5 @@
+import { CardsMap } from './internalTypes';
+
 /**
  * Represents the location of a draggable item within a container.
  */
@@ -205,11 +207,17 @@ export interface IBoard<T = any, U = any> {
 
   /**
    * Callback function when a card drag operation ends.
+   * @param cardsMap - The card with new order after dragging process.
    * @param cardItem - The card being dragged.
    * @param source - The source location of the card.
    * @param destination - The destination location of the card.
    */
-  onCardDragEnd?: (cardItem?: T, source?: IDrag, destination?: IDrag) => void;
+  onCardDragEnd?: (
+    cardsMap?: CardsMap,
+    cardItem?: T,
+    source?: IDrag,
+    destination?: IDrag,
+  ) => void;
 
   /**
    * Callback function when a column is clicked.
@@ -229,13 +237,15 @@ export interface IBoard<T = any, U = any> {
    */
   onColumnDrag?: (columnItem?: IColumn) => void;
 
-  // /**
-  //  * Callback function when a column drag operation ends.
-  //  * @param columnItem - The column being dragged.
-  //  * @param source - The source location of the column.
-  //  * @param destination - The destination location of the column.
-  //  */
+  /**
+   * Callback function when a column drag operation ends.
+   * @param columns - The column with new order after dragging process.
+   * @param columnItem - The column being dragged.
+   * @param source - The source location of the column.
+   * @param destination - The destination location of the column.
+   */
   onColumnDragEnd?: (
+    columns?: IColumn[],
     columnItem?: IColumn,
     sourceIndex?: number,
     destinationIndex?: number,

@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
+
 import { Header } from '../../components';
 import { lang } from '../../utils';
 import { Board, IColumn, IDrag } from './components';
-import { cards, columns } from './dummy';
+import { cardsDummy, columnsDummy } from './dummy';
 import { cardsProps, columnProps, CustomAddColumn } from './workboardProps';
 
 const Workboard: React.FC = () => {
+  const [columns, setColumns] = useState<IColumn[]>(columnsDummy);
+  const [cards, setCards] = useState(cardsDummy);
+
   // CLICKING CARD
 
   const onCardClick = (cardItem: any) => {
@@ -42,8 +47,22 @@ const Workboard: React.FC = () => {
     console.log(`dragging ${cardItem.id}`);
   };
 
-  const onCardDragEnd = (cardItem: any, source?: IDrag, destination?: IDrag) => {
+  const onCardDragEnd = (
+    cardsMap: any,
+    cardItem: any,
+    source?: IDrag,
+    destination?: IDrag,
+  ) => {
     console.log(`${cardItem.id} move from ${source?.key} to ${destination?.key}`);
+    const updatedCard = cards.find((card) => card.id === cardItem.id);
+    if (updatedCard) {
+      updatedCard.status = destination?.key as string;
+    }
+    const newOrderCards: any = [];
+    Object.values(cardsMap).forEach((cards: any) => {
+      newOrderCards.push(...cards);
+    });
+    setCards(newOrderCards);
   };
 
   // DRAGGING COLUMN
@@ -57,6 +76,7 @@ const Workboard: React.FC = () => {
   };
 
   const onColumnDragEnd = (
+    columns: any,
     columnItem: any,
     sourceIndex?: number,
     destinationIndex?: number,
@@ -64,15 +84,23 @@ const Workboard: React.FC = () => {
     console.log(
       `${columnItem.key} move from index ${sourceIndex} to ${destinationIndex}`,
     );
+    setColumns(columns);
   };
+
+  // useEffect(() => {
+  //   console.log('Controlled');
+  //   console.log(cards);
+  // }, [cards]);
 
   return (
     <>
       <Header title={lang('workboard.header')} />
       <Board
         // DATA SETTINGS
-        defaultColumns={columns}
-        defaultCards={cards}
+        // defaultColumns={columnsDummy}
+        // defaultCards={cardsDummy}
+        columns={columns}
+        cards={cards}
         columnOrientation="vertical"
         dragColumnEnabled={true}
         columnsProps={columnProps}

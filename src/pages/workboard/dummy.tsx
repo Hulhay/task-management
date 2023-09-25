@@ -2,7 +2,7 @@ import { Label, Stack, Text } from '@fluentui/react';
 
 import { IColumn } from './components/types';
 
-export const columns: IColumn[] = [
+export const columnsDummy: IColumn[] = [
   {
     key: 'todo',
     label: 'To Do',
@@ -51,7 +51,7 @@ export const columns: IColumn[] = [
   },
 ];
 
-export const cards = [
+export const cardsDummy = [
   {
     id: 'task-1',
     status: 'todo',

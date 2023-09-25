@@ -68,3 +68,6 @@ export const reorderCards = (result: DropResult, cardsData: CardsMap) => {
   if (!destination) return;
   return reorderCardsMap(cardsData, source, destination);
 };
+
+export const isEmptyObject = (obj: any) =>
+  Object.keys(obj).length === 0 && obj.constructor === Object;
