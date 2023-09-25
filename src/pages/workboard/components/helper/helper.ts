@@ -1,4 +1,4 @@
-import { DraggableLocation } from '@hello-pangea/dnd';
+import { DraggableLocation, DropResult } from '@hello-pangea/dnd';
 
 import { CardsMap, IColumn } from '../types';
 
@@ -55,4 +55,16 @@ export const reorderCardsMap = (
   newCardsData[destination.droppableId] = destinationColumnCards;
 
   return newCardsData;
+};
+
+export const reorderColumns = (result: DropResult, columnsData: IColumn[]) => {
+  const { source, destination } = result;
+  if (!destination) return;
+  return reorder(columnsData, source.index, destination.index);
+};
+
+export const reorderCards = (result: DropResult, cardsData: CardsMap) => {
+  const { source, destination } = result;
+  if (!destination) return;
+  return reorderCardsMap(cardsData, source, destination);
 };

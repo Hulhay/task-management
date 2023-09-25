@@ -11,7 +11,7 @@ import React, { useMemo, useState } from 'react';
 
 import { AddColumn } from '../addColumn';
 import { ColumnComponent } from '../column';
-import { getCardsMap, reorder, reorderCardsMap } from '../helper';
+import { getCardsMap, reorderCards, reorderColumns } from '../helper';
 import { CardsMap, IBoard, IColumn, IDrag } from '../types';
 
 const Board: React.FC<IBoard> = (props) => {
@@ -26,24 +26,12 @@ const Board: React.FC<IBoard> = (props) => {
   const [columnsData, setColumnsData] = useState<IColumn[]>(props.defaultColumns || []);
   const [cardsData, setCardsData] = useState<CardsMap>(initialCards);
 
-  const reorderColumns = (result: DropResult) => {
-    const { source, destination } = result;
-    if (!destination) return;
-    return reorder(columnsData, source.index, destination.index);
-  };
-
-  const reorderCards = (result: DropResult) => {
-    const { source, destination } = result;
-    if (!destination) return;
-    return reorderCardsMap(cardsData, source, destination);
-  };
-
   const handleDragEnd = (result: DropResult) => {
     // type show droppable location
     const { type, source, destination } = result;
 
     if (type === 'COLUMN') {
-      const newOrderCards = reorderCards(result);
+      const newOrderCards = reorderCards(result, cardsData);
       newOrderCards && setCardsData(newOrderCards);
 
       const card = cardsData[source.droppableId][source.index];
@@ -61,7 +49,7 @@ const Board: React.FC<IBoard> = (props) => {
     }
 
     if (type === 'BOARD') {
-      const newOrderColumns = reorderColumns(result);
+      const newOrderColumns = reorderColumns(result, columnsData);
       newOrderColumns && setColumnsData(newOrderColumns);
 
       const column = columnsData[source.index];
