@@ -33,19 +33,19 @@ const Workboard: React.FC = () => {
     return <CustomAddColumn />;
   };
 
-  const onAddColumnClick = (columns: any, newColumn: any) => {
-    // const newLabel = prompt('New label:');
-    // const newColumn: IColumn = {
-    //   key: newLabel?.toLowerCase() as string,
-    //   label: newLabel as string,
-    //   data: {
-    //     max: 100,
-    //     mustFinishedDate: '2023-10-13',
-    //   },
-    // };
-    // setColumns((prevColumns) => [...prevColumns, newColumn]);
-    console.log(newColumn);
-    console.log(columns);
+  const onAddColumnClick = (columns: any, newColumnAdded: any) => {
+    const newLabel = prompt('New label:');
+    if (newLabel) {
+      const newColumn: IColumn = {
+        key: newLabel?.toLowerCase(),
+        label: newLabel,
+        data: {
+          max: 100,
+          mustFinishedDate: '2023-10-13',
+        },
+      };
+      setColumns((prevColumns) => [...prevColumns, newColumn]);
+    }
   };
 
   // DRAGGING CARD
@@ -103,10 +103,10 @@ const Workboard: React.FC = () => {
       <Header title={lang('workboard.header')} />
       <Board
         // DATA SETTINGS
-        defaultColumns={columnsDummy}
-        defaultCards={cardsDummy}
-        // columns={columns}
-        // cards={cards}
+        // defaultColumns={columnsDummy}
+        // defaultCards={cardsDummy}
+        columns={columns}
+        cards={cards}
         columnOrientation="vertical"
         dragColumnEnabled={true}
         columnsProps={columnProps}
