@@ -33,7 +33,7 @@ const Workboard: React.FC = () => {
     return <CustomAddColumn />;
   };
 
-  const onAddColumnClick = (columns: any, newColumnAdded: any) => {
+  const onAddColumnClick = (newColumns: any, newColumnAdded: any) => {
     const newLabel = prompt('New label:');
     if (newLabel) {
       const newColumn: IColumn = {
@@ -103,10 +103,10 @@ const Workboard: React.FC = () => {
       <Header title={lang('workboard.header')} />
       <Board
         // DATA SETTINGS
-        // defaultColumns={columnsDummy}
-        // defaultCards={cardsDummy}
-        columns={columns}
-        cards={cards}
+        defaultColumns={columnsDummy}
+        defaultCards={cardsDummy}
+        // columns={columns}
+        // cards={cards}
         columnOrientation="vertical"
         dragColumnEnabled={true}
         columnsProps={columnProps}

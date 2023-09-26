@@ -178,8 +178,10 @@ export interface IBoard<T = any, U = any> {
 
   /**
    * Callback function when a button add column is clicked.
+   * @param newColumns - New columns after adding a new default column.
+   * @param newColumn - New default column added
    */
-  onAddColumnClick?: (columns?: IColumn[], newColumn?: IColumn) => void;
+  onAddColumnClick?: (newColumns?: IColumn[], newColumn?: IColumn) => void;
 
   /**
    * Callback function when a card is clicked.

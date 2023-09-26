@@ -128,7 +128,9 @@ const Board: React.FC<IBoard> = (props) => {
       label: `column-${defaultKey}`,
       data: {},
     };
+
     props.onAddColumnClick?.([...columnsData, defaultNewColumn], defaultNewColumn);
+
     props.defaultColumns &&
       setDefaultColumns((prevColumn) => [...prevColumn, defaultNewColumn]);
     props.defaultCards &&
