@@ -14,7 +14,7 @@ export interface ICustomCard {
 
 export interface ICustomGlobalHeaderColumn {
   label: string;
-  mustFinishedDate: string;
+  mustFinishedDate?: string;
   highPriorityCardCount: number;
 }
 
@@ -36,16 +36,16 @@ export const columnProps: IColumnsProps = {
     return (
       <CustomGlobalHeaderColumn
         label={column?.label || ''}
-        mustFinishedDate={column?.data.mustFinishedDate}
+        mustFinishedDate={column?.data?.mustFinishedDate || ''}
         highPriorityCardCount={
-          cards.filter((card: any) => card.priority === 'high').length
+          cards?.filter((card: any) => card.priority === 'high').length
         }
       />
     );
   },
   onRenderFooter: (cards: any, column?: IColumn) => {
     return (
-      <CustomGlobalFooterColumn cardCount={cards.length} maxCard={column?.data.max} />
+      <CustomGlobalFooterColumn cardCount={cards?.length} maxCard={column?.data?.max} />
     );
   },
 };
@@ -102,8 +102,8 @@ export const CustomGlobalHeaderColumn: React.FC<ICustomGlobalHeaderColumn> = ({
 };
 
 export const CustomGlobalFooterColumn: React.FC<ICustomGlobalFooterColumn> = ({
-  cardCount,
-  maxCard,
+  cardCount = 0,
+  maxCard = 100,
 }) => {
   return (
     <div style={{ textAlign: 'center' }}>{`card capacity: ${cardCount}/${maxCard}`}</div>

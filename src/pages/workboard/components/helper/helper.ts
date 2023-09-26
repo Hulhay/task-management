@@ -71,3 +71,8 @@ export const reorderCards = (result: DropResult, cardsData: CardsMap) => {
 
 export const isEmptyObject = (obj: any) =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
+
+export const generateUniqueKey = () => {
+  console.log('here');
+  return Math.random().toString(16).slice(2);
+};

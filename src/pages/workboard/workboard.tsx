@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Header } from '../../components';
 import { lang } from '../../utils';
@@ -33,8 +33,19 @@ const Workboard: React.FC = () => {
     return <CustomAddColumn />;
   };
 
-  const onAddColumnClick = () => {
-    console.log('add something');
+  const onAddColumnClick = (columns: any, newColumn: any) => {
+    // const newLabel = prompt('New label:');
+    // const newColumn: IColumn = {
+    //   key: newLabel?.toLowerCase() as string,
+    //   label: newLabel as string,
+    //   data: {
+    //     max: 100,
+    //     mustFinishedDate: '2023-10-13',
+    //   },
+    // };
+    // setColumns((prevColumns) => [...prevColumns, newColumn]);
+    console.log(newColumn);
+    console.log(columns);
   };
 
   // DRAGGING CARD
@@ -87,20 +98,15 @@ const Workboard: React.FC = () => {
     setColumns(columns);
   };
 
-  // useEffect(() => {
-  //   console.log('Controlled');
-  //   console.log(cards);
-  // }, [cards]);
-
   return (
     <>
       <Header title={lang('workboard.header')} />
       <Board
         // DATA SETTINGS
-        // defaultColumns={columnsDummy}
-        // defaultCards={cardsDummy}
-        columns={columns}
-        cards={cards}
+        defaultColumns={columnsDummy}
+        defaultCards={cardsDummy}
+        // columns={columns}
+        // cards={cards}
         columnOrientation="vertical"
         dragColumnEnabled={true}
         columnsProps={columnProps}

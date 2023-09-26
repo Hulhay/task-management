@@ -28,5 +28,9 @@ export interface ColumnKanbanProps {
 }
 
 export interface AddColumnKanbanProps {
-  onAddColumnClick?: () => void;
+  onAddColumnClick?: (
+    event: React.MouseEvent,
+    columns: IColumn[],
+    newColumn: IColumn,
+  ) => void;
 }

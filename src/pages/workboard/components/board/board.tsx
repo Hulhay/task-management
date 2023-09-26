@@ -11,7 +11,13 @@ import React, { useMemo, useState } from 'react';
 
 import { AddColumn } from '../addColumn';
 import { ColumnComponent } from '../column';
-import { getCardsMap, isEmptyObject, reorderCards, reorderColumns } from '../helper';
+import {
+  generateUniqueKey,
+  getCardsMap,
+  isEmptyObject,
+  reorderCards,
+  reorderColumns,
+} from '../helper';
 import { CardsMap, IBoard, IColumn, IDrag } from '../types';
 
 const Board: React.FC<IBoard> = (props) => {
@@ -29,7 +35,7 @@ const Board: React.FC<IBoard> = (props) => {
       props.cards || [],
       props.columnsProps?.keyField || '',
     );
-  }, [props.cards]);
+  }, [props.cards, props.columns]);
 
   const [defaultColumns, setDefaultColumns] = useState<IColumn[]>(
     props.defaultColumns || [],
@@ -115,6 +121,20 @@ const Board: React.FC<IBoard> = (props) => {
     }
   };
 
+  const handleAddColumn = () => {
+    const defaultKey = generateUniqueKey();
+    const defaultNewColumn: IColumn = {
+      key: `key-${defaultKey}`,
+      label: `column-${defaultKey}`,
+      data: {},
+    };
+    props.onAddColumnClick?.([...columnsData, defaultNewColumn], defaultNewColumn);
+    props.defaultColumns &&
+      setDefaultColumns((prevColumn) => [...prevColumn, defaultNewColumn]);
+    props.defaultCards &&
+      setDefaultCards({ ...defaultCards, [defaultNewColumn.key]: [] });
+  };
+
   return (
     <DragDropContext
       onDragStart={handleDragStart}
@@ -151,11 +171,9 @@ const Board: React.FC<IBoard> = (props) => {
               {provided.placeholder}
               {props.addColumnEnabled === false ? null : props.onRenderAddColumnButton ? (
                 // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-                <div onClick={props.onAddColumnClick}>
-                  {props.onRenderAddColumnButton()}
-                </div>
+                <div onClick={handleAddColumn}>{props.onRenderAddColumnButton()}</div>
               ) : (
-                <AddColumn onAddColumnClick={props.onAddColumnClick} />
+                <AddColumn onAddColumnClick={handleAddColumn} />
               )}
             </Stack>
           </div>

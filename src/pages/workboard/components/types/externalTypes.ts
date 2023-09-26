@@ -179,7 +179,7 @@ export interface IBoard<T = any, U = any> {
   /**
    * Callback function when a button add column is clicked.
    */
-  onAddColumnClick?: () => void;
+  onAddColumnClick?: (columns?: IColumn[], newColumn?: IColumn) => void;
 
   /**
    * Callback function when a card is clicked.
